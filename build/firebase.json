@@ -1,0 +1,23 @@
+{
+  "hosting": {
+    "headers" : [{
+      "source": "**/*.@(jpg|jpeg|png)",
+      "headers" : [{
+        "key" : "Access-Control-Allow-Origin",
+        "value": "*"
+      }]
+    }],
+    "public": "web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

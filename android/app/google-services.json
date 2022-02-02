@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "88548732056",
+    "firebase_url": "https://bangkit-83a09-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "bangkit-83a09",
+    "storage_bucket": "bangkit-83a09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88548732056:android:5d56c8e6c1365c5353f4ed",
+        "android_client_info": {
+          "package_name": "com.techinsight.bangkit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88548732056-bljbapq4o74li7j2cbv67mqrq86tqjhm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techinsight.bangkit",
+            "certificate_hash": "dde106ca3a295cd19589574799968e27bdd58dc0"
+          }
+        },
+        {
+          "client_id": "88548732056-l5ucn96r3j70i4i8c2g2dar5lg5883ml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJfcu6BVfn0wsRIZheOdIE7R0MbV2ODcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88548732056-l5ucn96r3j70i4i8c2g2dar5lg5883ml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "88548732056-f6hhavv6sfa91pidevbaiepg6fgo9psk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.techinsight.bangkit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
