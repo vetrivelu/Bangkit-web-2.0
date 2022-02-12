@@ -432,7 +432,7 @@ showFuturePoponSucessDialog({required BuildContext context, required Future<dyna
       });
 }
 
-showFutureCustomDialog({required BuildContext context, required Future<dynamic> future, required void Function() onTapOk}) {
+showFutureCustomDialog({required BuildContext context, required Future<dynamic> future, required void Function()? onTapOk}) {
   showDialog(
       context: context,
       builder: (context) {
@@ -447,10 +447,18 @@ showFutureCustomDialog({required BuildContext context, required Future<dynamic> 
                 return AlertDialog(
                   title: Text(response.code),
                   content: Text(response.message),
-                  actions: [ElevatedButton(onPressed: onTapOk, child: Text("Okay"))],
+                  actions: [
+                    ElevatedButton(
+                        onPressed: response.code == "Error"
+                            ? () {
+                                Navigator.of(context).pop();
+                              }
+                            : onTapOk,
+                        child: const Text("Okay"))
+                  ],
                 );
               }
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             });

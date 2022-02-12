@@ -1,14 +1,17 @@
 import 'package:bangkit/constants/constituency_list.dart';
+import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/constants/themeconstants.dart';
 import 'package:bangkit/models/profile.dart';
 import 'package:bangkit/services/firebase.dart';
+import 'package:bangkit/widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class VolunteerList extends StatefulWidget {
-  VolunteerList({Key? key}) : super(key: key);
+  const VolunteerList({Key? key, this.setIndex}) : super(key: key);
+  final void Function(int)? setIndex;
 
   @override
   State<VolunteerList> createState() => _VolunteerListState();
@@ -18,48 +21,59 @@ class _VolunteerListState extends State<VolunteerList> {
   @override
   void initState() {
     super.initState();
-    query = users.where("isVolunteer", isEqualTo: true);
+    loadItems();
+    loadQuery();
   }
 
-  List<String> selectedStates = [];
+  void loadQuery() {
+    setState(() {
+      query = users.where("isVolunteer", isEqualTo: true).where("isApproved", isEqualTo: true);
+      _selectedState = _selectedState ?? 'All';
+      if (_selectedState != 'All' && _selectedState != null) {
+        query = query.where(_selectedState!, isEqualTo: true);
+      }
+      if (selectedServices.isNotEmpty) {
+        query = query.where("services", arrayContainsAny: selectedServices);
+      }
+    });
+  }
 
+  final states = postalCodes.keys.toList();
   late Query query;
-  void _showMultiSelect(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (ctx) {
-        return MultiSelectDialog(
-          title: const Text("Select State"),
-          items: federals.keys.map((e) => MultiSelectItem(e.toString(), e.toString())).toList(),
-          initialValue: selectedStates,
-          onConfirm: (values) async {
-            selectedStates = values.map((e) => e.toString()).toList();
-            setState(() {
-              query = query.where("primaryAddress.state", whereIn: selectedStates);
-            });
-          },
-        );
-      },
-    );
+  String? _selectedState;
+  List<String> selectedServices = [];
+
+  DropdownMenuItem<String> nullItem = const DropdownMenuItem(
+    value: "All",
+    child: Text("All"),
+  );
+
+  final List<DropdownMenuItem<String>> _stateItems = [];
+  void loadItems() {
+    _stateItems.add(nullItem);
+    _stateItems.addAll(postalCodes.keys.map((state) => DropdownMenuItem(value: state, child: Text(state))));
   }
+
+  // get items => nullItem.addAll(postalCodes.keys.map((state) => DropdownMenuItem(value: state, child: Text(state))).toList(growable: false));
+  // Iterable get pincodes => _selectedState != null ? postalCodes[_selectedState]!.map((e) => e["postCode"]) : [];
+  // get pincodeItems => pincodes.map((e) => DropdownMenuItem(value: e as String, child: Text(e))).toList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(context),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
+        appBar: getAppBar(context),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Padding(
                     padding: EdgeInsets.all(4.0),
                     child: Text(
-                      'VOLUNTEERS LIST',
+                      'VOLUNTEER LIST',
                       style: TextStyle(
                         shadows: [Shadow(color: Colors.black, offset: Offset(0, -5))],
                         color: Colors.transparent,
@@ -71,76 +85,79 @@ class _VolunteerListState extends State<VolunteerList> {
                     ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  _showMultiSelect(context);
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Icon(
-                    Icons.filter_alt_sharp,
-                    color: Color(0xFF22A8E0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: SizedBox(
+                    width: getWidth(context) * 0.4,
+                    child: DropdownButtonFormField(
+                      decoration: const InputDecoration(border: InputBorder.none),
+                      value: _selectedState,
+                      items: _stateItems,
+                      onChanged: (state) {
+                        _selectedState = state as String? ?? _selectedState;
+                        loadQuery();
+                      },
+                    ),
                   ),
                 ),
-              )
-            ]),
-          ),
-          StreamBuilder<QuerySnapshot>(
-            stream: query.snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-              if (streamSnapshot.connectionState == ConnectionState.active) {
-                print(streamSnapshot.data!.docs.length);
-                if (streamSnapshot.hasError) {
-                  return const Text("Error");
-                }
-                if (streamSnapshot.connectionState == ConnectionState.waiting) {
-                  return Column(
-                    children: const [
-                      CircularProgressIndicator(),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Loading"),
-                      )
-                    ],
-                  );
-                }
-                return Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(8),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: streamSnapshot.data!.docs.map((snapshot) {
-                      var data = snapshot.data()! as Map<String, dynamic>;
-                      var profile = Profile.fromJson(data);
-                      print(data);
-                      return CustomExpansionTile(profile: profile);
-                      // print("I am data $data");
-                    }).toList(),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
-        ],
-      ),
-    );
+              ],
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: serviceListController.service!
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: ChoiceChip(
+                              selected: getServiceChipStats(e),
+                              label: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  e.toUpperCase(),
+                                  style: TextStyle(color: getServiceChipStats(e) ? Colors.white : Colors.black),
+                                ),
+                              ),
+                              onSelected: (bool value) {
+                                if (value == true) {
+                                  selectedServices.add(e);
+                                } else {
+                                  selectedServices.removeWhere((element) => element == e);
+                                }
+                                loadQuery();
+                              }),
+                        ))
+                    .toList(),
+              ),
+            ),
+            const Divider(),
+            Expanded(
+              child: StreamBuilder(
+                stream: query.snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active || snapshot.hasData) {
+                    var documents = snapshot.data!.docs;
+                    List<Profile> profiles = documents.map((e) => Profile.fromJson(e.data() as Map<String, dynamic>)).toList();
+                    return ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: profiles.map((e) => CustomExpansionTile(profile: e)).toList(),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(child: Text("An error has occured"));
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+          ],
+        ));
   }
 
-  getFederals() {
-    var returns = [];
-    if (selectedStates.isEmpty) {
-      for (var element in federals.keys) {
-        returns.addAll(federals[element]!.keys.toList());
-      }
-    } else {
-      for (var element in selectedStates) {
-        returns.addAll(federals[element]!.keys.toList());
-      }
-    }
-    return returns.map((e) => MultiSelectItem(e.toString(), e)).toList();
+  getServiceChipStats(String e) {
+    int count = selectedServices.where((element) => element == e).toList().length;
+    return count != 0 ? true : false;
   }
 }
 
@@ -154,6 +171,8 @@ class CustomExpansionTile extends StatefulWidget {
 
 class _CustomExpansionTileState extends State<CustomExpansionTile> {
   bool showSubtitle = true;
+
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +196,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                       child: ElevatedButton(
                           onPressed: () {
                             widget.profile.isApproved = true;
-                            widget.profile.updateUser();
+                            widget.profile.approveVolunteer();
                           },
                           child: const Text("Approve")),
                     ),
@@ -188,16 +207,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return PhotoViewGallery.builder(
-                              itemCount: widget.profile.documents.length,
-                              builder: (context, index) {
-                                return PhotoViewGalleryPageOptions(
-                                  imageProvider: NetworkImage(widget.profile.documents[index]),
-                                  initialScale: PhotoViewComputedScale.contained * 0.8,
-                                  heroAttributes: PhotoViewHeroAttributes(tag: widget.profile.documents[index]),
-                                );
-                              },
-                            );
+                            return PhotoViewer(urls: widget.profile.documents.map((e) => e.toString()).toList());
                           });
                     },
                     child: const Text("See Attachments")),

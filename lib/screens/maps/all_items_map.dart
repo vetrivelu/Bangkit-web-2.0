@@ -1,19 +1,10 @@
-// ignore_for_file: implementation_imports
-import 'dart:async';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:bangkit/constants/themeconstants.dart';
 import 'package:bangkit/models/area.dart';
-import 'package:bangkit/models/geocoding.dart';
 import 'package:bangkit/services/firebase.dart';
-import 'package:bangkit/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter_platform_interface/src/types/marker.dart';
 import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
-import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
-import 'package:google_maps_flutter_platform_interface/src/types/camera.dart';
-import 'package:google_maps_flutter_platform_interface/src/types/marker_updates.dart';
 
 import 'mapview.dart';
 
@@ -48,20 +39,38 @@ class _AllMapState extends State<AllMap> {
             List<QueryDocumentSnapshot<Map<String, dynamic>>> documents = snapshot.data!.docs;
             List<Area> areas = documents.map((e) => Area.fromJson(e.data())).toList();
             markers.clear();
-            markers = areas.map((e) {
-              return e.marker.copyWith(onTapParam: () {
-                print("Hello");
-              });
-              // return Marker(
-              //     markerId: MarkerId(e.id.toString()),
-              //     position: e.latlang,
-              //     icon: e.markerIcon,
-              //     consumeTapEvents: true,
-              //     infoWindow: InfoWindow(title: e.location.toString(), onTap: () => Get.to(() => AreaView(area: e))),
-              //     onTap: () {
-              //       print("Hello");
-              //     },);
-            }).toList();
+            markers = areas
+                .map((e) => e.getMarker(() {
+                      print("Hello");
+                      Get.to(() => AreaView(area: e));
+                    }))
+                .toList();
+
+            markers.add(Marker(
+                consumeTapEvents: true,
+                markerId: const MarkerId("test Marker"),
+                position: const LatLng(0.0, 0.0),
+                icon: BitmapDescriptor.defaultMarker,
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Text("I am tapped");
+                      });
+                }));
+
+            print("markers initiated");
+
+            // return Marker(
+            //     markerId: MarkerId(e.id.toString()),
+            //     position: e.latlang,
+            //     icon: e.markerIcon,
+            //     consumeTapEvents: true,
+            //     infoWindow: InfoWindow(title: e.location.toString(), onTap: () => Get.to(() => AreaView(area: e))),
+            //     onTap: () {
+            //       print("Hello");
+            //     },);
+
             if (markers.isNotEmpty) {
               initPosistion = getAveragePosistion();
             } else {
@@ -87,6 +96,7 @@ class _AllMapState extends State<AllMap> {
                     ));
               });
             },
+                // gestureRecognizers: ,
                 initialCameraPosition: CameraPosition(
                   target: initPosistion!,
                   zoom: 9,

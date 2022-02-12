@@ -109,14 +109,17 @@ class _EditProfileState extends State<EditProfile> {
         state: secondaryState,
         pincode: primaryPostCode);
     return Profile(
-        name: nameController.text,
-        phone: phoneController.text,
-        secondaryPhone: secondaryaddressController.text,
-        email: emailController.text,
-        primaryAddress: primaryAddress,
-        secondaryAddress: secondaryAddress,
-        icNumber: icnumberController.text,
-        documents: []);
+      name: nameController.text,
+      phone: phoneController.text,
+      secondaryPhone: secondaryaddressController.text,
+      email: emailController.text,
+      primaryAddress: primaryAddress,
+      secondaryAddress: secondaryAddress,
+      icNumber: icnumberController.text,
+      documents: widget.profile.documents,
+      services: widget.profile.services,
+      fcm: widget.profile.fcm,
+    );
   }
 
   late List<String> colors;

@@ -1,5 +1,3 @@
-// ignore_for_file: implementation_imports
-
 import 'dart:async';
 
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -9,7 +7,7 @@ import 'package:bangkit/models/geocoding.dart';
 import 'package:bangkit/services/firebase.dart';
 import 'package:bangkit/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AreaView extends StatefulWidget {
   const AreaView({Key? key, this.area, this.coordinates}) : super(key: key);
@@ -25,7 +23,9 @@ class _AreaViewState extends State<AreaView> {
     super.initState();
     if (widget.area == null) {
       _selectedType = AreaType.floodProne;
-      props.add(Props(key: TextEditingController(), value: TextEditingController()));
+      props.add(Props.getProps(key: "Name", value: ""));
+      props.add(Props.getProps(key: "Max Flood Level", value: ""));
+      // props.add(Props(key: TextEditingController(), value: TextEditingController()));
     } else {
       for (var key in widget.area!.property.keys) {
         props.add(Props(key: TextEditingController(text: key), value: TextEditingController(text: widget.area!.property[key].toString())));
@@ -108,6 +108,11 @@ class _AreaViewState extends State<AreaView> {
                                   onChanged: (type) {
                                     setState(() {
                                       _selectedType = type as AreaType;
+                                      props.clear();
+                                      props.add(Props.getProps(key: "Name", value: ""));
+                                      if (_selectedType == AreaType.floodProne) {
+                                        props.add(Props.getProps(key: "Max Flood Level", value: ""));
+                                      }
                                     });
                                   },
                                   items: AreaType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.toString()))).toList(),
@@ -205,6 +210,10 @@ class Props {
 
   String get keyText => key.text;
   String get valueText => value.text;
+
+  static getProps({required String key, required String value}) {
+    return Props(key: TextEditingController(text: key), value: TextEditingController(text: value));
+  }
 
   static convertPropsToJson(List<Props> props) {
     Map<String, dynamic> json = {};

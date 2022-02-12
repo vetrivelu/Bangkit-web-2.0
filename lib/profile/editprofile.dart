@@ -116,7 +116,9 @@ class _EditProfileState extends State<EditProfile> {
         primaryAddress: primaryAddress,
         secondaryAddress: secondaryAddress,
         icNumber: icnumberController.text,
-        documents: []);
+        documents: widget.profile.documents,
+        services: widget.profile.services,
+        fcm: widget.profile.fcm);
   }
 
   late List<String> colors;

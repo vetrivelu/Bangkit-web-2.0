@@ -45,6 +45,8 @@ class Area {
 
   Marker get marker => Marker(markerId: MarkerId(id.toString()), position: latlang, icon: markerIcon);
 
+  Marker getMarker(void Function()? callback) => Marker(markerId: MarkerId(id.toString()), position: latlang, icon: markerIcon, onTap: callback);
+
   BitmapDescriptor get markerIcon {
     switch (type) {
       case AreaType.floodProne:
@@ -72,8 +74,13 @@ class Area {
     return results.first;
   }
 
-  add() async {
+  Future<Response> add() async {
     id = docId;
+    for (var element in property.values) {
+      if (element.toString().isEmpty) {
+        return Response.error("Please fill all fields");
+      }
+    }
     return await areas
         .doc(docId)
         .set(toJson())

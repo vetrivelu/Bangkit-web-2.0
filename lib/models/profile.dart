@@ -3,7 +3,8 @@
 //     final profile = profileFromJson(jsonString);
 
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/models/response.dart';
 import 'package:bangkit/services/firebase.dart';
@@ -14,20 +15,21 @@ Profile profileFromJson(String str) => Profile.fromJson(json.decode(str));
 String profileToJson(Profile data) => json.encode(data.toJson());
 
 class Profile {
-  Profile({
-    this.uid,
-    required this.name,
-    required this.phone,
-    required this.secondaryPhone,
-    required this.email,
-    required this.primaryAddress,
-    required this.secondaryAddress,
-    this.isVolunteer = false,
-    this.isApproved = false,
-    this.about = '',
-    required this.documents,
-    required this.icNumber,
-  });
+  Profile(
+      {this.uid,
+      required this.name,
+      required this.phone,
+      required this.secondaryPhone,
+      required this.email,
+      required this.primaryAddress,
+      required this.secondaryAddress,
+      this.isVolunteer = false,
+      this.isApproved = false,
+      this.about = '',
+      required this.fcm,
+      required this.documents,
+      required this.icNumber,
+      required this.services});
 
   String? uid;
   String name;
@@ -35,14 +37,24 @@ class Profile {
   String secondaryPhone;
   String email;
   String icNumber;
+  String fcm;
   bool isVolunteer;
   bool isApproved;
   Address primaryAddress;
   Address secondaryAddress;
   List<dynamic> documents;
   String? about;
+  List<dynamic> services;
 
   static List<String> emptyString = [];
+
+  get searchService {
+    Map<String, dynamic> json = {};
+    for (var element in services) {
+      json["$element"] = true;
+    }
+    return json;
+  }
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
         uid: json["uid"],
@@ -57,6 +69,8 @@ class Profile {
         about: json["about"] ?? '',
         icNumber: json["icNumber"] ?? '',
         documents: json["documents"] ?? emptyString,
+        services: json["services"] ?? [],
+        fcm: json['fcm'] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,6 +86,12 @@ class Profile {
         "secondaryAddress": secondaryAddress.toJson(),
         "about": about ?? '',
         "documents": documents,
+        "services": services,
+        "searchService": searchService,
+        primaryAddress.state: true,
+        secondaryAddress.state: true,
+        primaryAddress.pincode: true,
+        secondaryAddress.pincode: true,
       };
 
   Future<Response> addUser(String uid) async {
@@ -92,6 +112,13 @@ class Profile {
         .then((value) => Response(code: "Success", message: "Your profile has been updated successfully"))
         .catchError((error) {
       return Response(code: "Failed", message: error.toString());
+    });
+  }
+
+  approveVolunteer() {
+    return users.doc(uid).update({"isApproved": true}).then((value) {
+      HttpsCallable callable = functions.httpsCallable('sendVolunteerApprovedNotification');
+      callable.call({"token": fcm}).then((value) => Response.success("Approved succesfullly"));
     });
   }
 

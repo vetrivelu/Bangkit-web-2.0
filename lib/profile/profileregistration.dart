@@ -110,7 +110,9 @@ class _RegistrationState extends State<Registration> {
         primaryAddress: primaryAddress,
         secondaryAddress: secondaryAddress,
         icNumber: icnumberController.text,
-        documents: []);
+        documents: [],
+        services: [],
+        fcm: '');
   }
 
   late List<String> colors;
