@@ -1,5 +1,6 @@
 import 'package:bangkit/auth/login.dart';
 import 'package:bangkit/constants/controller_constants.dart';
+import 'package:bangkit/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +34,10 @@ class LandingPage extends StatelessWidget {
                       profileController.profile = profile;
                       var json = profileSnapshot.data!.data();
                       if (json["isAdmin"] ?? false) {
-                        return BottomRouter();
+                        return const HomePage();
                       }
-
-                      return const Text("You are Not an Admin");
-                    } else {
-                      return const Registration();
                     }
+                    return const Text("You are Not an Admin");
                   } else {
                     return const Scaffold(body: Center(child: CircularProgressIndicator()));
                   }

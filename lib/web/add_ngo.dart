@@ -1,14 +1,8 @@
-import 'dart:async';
 import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/models/ngo.dart';
-import 'package:bangkit/services/firebase.dart';
 import 'package:flutter/material.dart';
 import '../profile/profileregistration.dart';
-import 'dart:ui';
-import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
-import 'dart:io';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class AddNgo extends StatefulWidget {
   AddNgo({Key? key}) : super(key: key);
@@ -48,34 +42,34 @@ class _AddNgoState extends State<AddNgo> {
   // var type;
   ServiceType? serviceType = ServiceType.assistance;
 
-  late String selectedService;
+  String? selectedService;
   String selectedState = postalCodes.keys.first;
 
   List<String> services = [];
   // late  List<Paths?> _paths = [];
   late List<String?> items = [null];
-  late List<Widget> _storeItmes = [];
-  String _path = '';
-  File? _file = null;
+  // late final List<Widget> _storeItmes = [];
+  // String _path = '';
+  // final File? _file = null;
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     entity = EntityType.government;
     serviceType = ServiceType.assistance;
     services = serviceListController.service ?? [];
-    selectedService = services.first;
+    // selectedService = services.first;
+
+    super.initState();
   }
 
-  Future chooseFile() async {
-    var file = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (file != null) {
-      setState(() {
-        _path = file.path;
-      });
-    }
-  }
+  // Future chooseFile() async {
+  //   var file = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   if (file != null) {
+  //     setState(() {
+  //       _path = file.path;
+  //     });
+  //   }
+  // }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -124,7 +118,7 @@ class _AddNgoState extends State<AddNgo> {
                     email: emailController.text,
                     contactPersonName: contactPersonController.text,
                     description: descriptioncontroller.text,
-                    service: selectedService,
+                    service: selectedService ?? '',
                     entityType: EntityType.private,
                     serviceType: serviceType,
                     urlWeb: urlControlller.text,

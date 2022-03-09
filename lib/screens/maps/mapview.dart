@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AreaView extends StatefulWidget {
-  const AreaView({Key? key, this.area, this.coordinates}) : super(key: key);
+  AreaView({Key? key, this.area, this.coordinates}) : super(key: key);
   final Area? area;
-  final LatLng? coordinates;
+  LatLng? coordinates;
   @override
   State<AreaView> createState() => _AreaViewState();
 }
@@ -21,20 +21,27 @@ class _AreaViewState extends State<AreaView> {
   @override
   void initState() {
     super.initState();
+    location.text = widget.area?.location ?? '';
     if (widget.area == null) {
       _selectedType = AreaType.floodProne;
       props.add(Props.getProps(key: "Name", value: ""));
       props.add(Props.getProps(key: "Max Flood Level", value: ""));
+
       // props.add(Props(key: TextEditingController(), value: TextEditingController()));
     } else {
       for (var key in widget.area!.property.keys) {
         props.add(Props(key: TextEditingController(text: key), value: TextEditingController(text: widget.area!.property[key].toString())));
       }
+
+      widget.coordinates = LatLng(widget.area!.coordinates.latitude, widget.area!.coordinates.longitude);
+      _selectedType = widget.area!.type;
     }
 
     if (widget.coordinates != null) {
       latitude.text = widget.coordinates!.latitude.toString();
       longitude.text = widget.coordinates!.longitude.toString();
+    } else {
+      widget.coordinates = const LatLng(0, 0);
     }
   }
 

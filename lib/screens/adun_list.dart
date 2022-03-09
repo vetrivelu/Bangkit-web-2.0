@@ -1,8 +1,8 @@
 import 'package:bangkit/constants/constituency_list.dart';
-import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/constants/themeconstants.dart';
 import 'package:bangkit/models/adun.dart';
 import 'package:bangkit/services/firebase.dart';
+import 'package:bangkit/web/add_adun.dart';
 import 'package:bangkit/web/edit_adun.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,6 +49,12 @@ class _AdunListState extends State<AdunList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getAppBar(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => AddAdun());
+        },
+        child: const Icon(Icons.add),
+      ),
       body: Column(
         children: [
           Padding(

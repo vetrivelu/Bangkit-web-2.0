@@ -4,11 +4,18 @@ import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/constants/themeconstants.dart';
 import 'package:bangkit/models/profile.dart';
 import 'package:bangkit/models/weather.dart';
+import 'package:bangkit/screens/aid%20&grants/aidpost.dart';
+import 'package:bangkit/screens/maps/location_list.dart';
 import 'package:bangkit/screens/page_view.dart';
+import 'package:bangkit/screens/repo_list.dart';
+import 'package:bangkit/screens/volunteer_list.dart';
 import 'package:get/get.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
+
+import '../services/firebase.dart';
+import 'adun_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -58,25 +65,25 @@ class HomePage extends StatelessWidget {
                           assetPath: 'assets/ngologo.png',
                           label: 'Database',
                           onTap: () {
-                            pageController.load!(1);
+                            Get.to(() => NgoList(query: ngos.where("entityType", isEqualTo: 1), entityType: 'NGO DATABASE'));
                           }),
                       CategorySquareTile(
                           assetPath: 'assets/aa.png',
                           label: 'Gov Agencies',
                           onTap: () {
-                            pageController.load!(2);
+                            Get.to(() => NgoList(query: ngos.where("entityType", isEqualTo: 0), entityType: 'GOVERNMENT AGENCIES'));
                           }),
                       CategorySquareTile(
                           assetPath: 'assets/adun.png',
                           label: 'Ahli Parlimen & ADUN',
                           onTap: () {
-                            pageController.load!(3);
+                            Get.to(() => AdunList());
                           }),
                       CategorySquareTile(
                           assetPath: 'assets/volunteer.png',
                           label: 'Volunteers List',
                           onTap: () {
-                            pageController.load!(4);
+                            Get.to(() => const VolunteerList());
                           }),
                     ],
                   ),
@@ -107,17 +114,18 @@ class HomePage extends StatelessWidget {
                     runSpacing: 10,
                     children: [
                       CategorySquareTile(
-                          assetPath: 'assets/police.png',
-                          label: 'E-PDRM\nReporting',
+                          assetPath: 'assets/aidgranticon.webp',
+                          label: 'Aid & Grants',
                           onTap: () {
-                            launch("https://ereporting.rmp.gov.my/index.aspx");
+                            // launch("https://ereporting.rmp.gov.my/index.aspx");
                             // Get.to(() => const WebViewer(url: "https://ereporting.rmp.gov.my/index.aspx"));
+                            Get.to(() => const AidAndGrants());
                             //  pageController.load!(0);
                           }),
 
                       CategorySquareTile(
                           assetPath: 'assets/floodMarker.png',
-                          label: 'Map\nLocation',
+                          label: 'Map Location',
                           onTap: () {
                             // pageController.load!(5);
                             Get.toNamed("/map");
@@ -125,10 +133,10 @@ class HomePage extends StatelessWidget {
 
                       CategorySquareTile(
                           assetPath: 'assets/dam.jpeg',
-                          label: 'Hydraulic\nStructures',
+                          label: 'Location List',
                           onTap: () {
                             // pageController.pageNumber = 7;
-                            Get.to(() => const WebViewer(url: "https://ihydro.sarawak.gov.my/iHydro/en/map/maps.jsp"));
+                            Get.to(() => const LocationList());
                           }),
 
                       // CategorySquareTile(

@@ -25,6 +25,9 @@ class _PhotoViewerState extends State<PhotoViewer> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
       body: Row(children: [
         Expanded(
           flex: 1,

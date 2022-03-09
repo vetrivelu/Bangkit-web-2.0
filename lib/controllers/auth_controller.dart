@@ -1,7 +1,6 @@
 import 'package:bangkit/models/profile.dart';
 import 'package:bangkit/models/service_category.dart';
 import 'package:bangkit/services/firebase.dart';
-import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -17,6 +16,11 @@ class ProfileController extends GetxController {
 class ServiceListController extends GetxController {
   static ServiceListController instance = Get.find();
   List<String>? service = [];
+
+  @override
+  onInit() {
+    reloadServices();
+  }
 
   reloadServices() async {
     service = await NgoService.getServices();

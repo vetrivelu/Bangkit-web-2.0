@@ -1,13 +1,9 @@
-import 'package:bangkit/constants/constituency_list.dart';
 import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/constants/themeconstants.dart';
 import 'package:bangkit/models/profile.dart';
 import 'package:bangkit/services/firebase.dart';
 import 'package:bangkit/widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 
 class VolunteerList extends StatefulWidget {
   const VolunteerList({Key? key, this.setIndex}) : super(key: key);
@@ -27,7 +23,7 @@ class _VolunteerListState extends State<VolunteerList> {
 
   void loadQuery() {
     setState(() {
-      query = users.where("isVolunteer", isEqualTo: true).where("isApproved", isEqualTo: true);
+      query = users.where("isVolunteer", isEqualTo: true);
       _selectedState = _selectedState ?? 'All';
       if (_selectedState != 'All' && _selectedState != null) {
         query = query.where(_selectedState!, isEqualTo: true);

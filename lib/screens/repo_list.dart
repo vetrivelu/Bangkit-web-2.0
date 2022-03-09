@@ -33,7 +33,7 @@ class _NgoListState extends State<NgoList> {
     super.initState();
     query = widget.query;
     services = serviceListController.service!;
-    // selectedService = serviceListController.service!.first;
+    selectedService = serviceListController.service!.first;
   }
 
   void reload() {
