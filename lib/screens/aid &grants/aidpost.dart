@@ -2,6 +2,7 @@ import 'package:bangkit/constants/themeconstants.dart';
 import 'package:bangkit/models/aid_and_grant.dart';
 import 'package:bangkit/screens/aid%20&grants/aidstory.dart';
 import 'package:bangkit/services/firebase.dart';
+import 'package:bangkit/web/add_post.dart';
 import 'package:bangkit/web/edit_post.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,6 +19,12 @@ class AidAndGrants extends StatefulWidget {
 class _AidAndGrantsState extends State<AidAndGrants> {
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.to(() => AddPost());
+          },
+          child: const Icon(Icons.add),
+        ),
         appBar: AppBar(
           centerTitle: true,
           title: SizedBox(height: getHeight(context) * 0.15, child: Image.asset('assets/bina.png')),

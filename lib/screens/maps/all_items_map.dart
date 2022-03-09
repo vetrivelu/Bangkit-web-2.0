@@ -97,8 +97,8 @@ class _AllMapState extends State<AllMap> {
               });
             },
                 // gestureRecognizers: ,
-                initialCameraPosition: CameraPosition(
-                  target: initPosistion!,
+                initialCameraPosition: const CameraPosition(
+                  target: LatLng(3.140853, 101.693207),
                   zoom: 9,
                 ),
                 markers: markers.toSet());
