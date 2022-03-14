@@ -1,5 +1,6 @@
 import 'package:bangkit/routers/bottom_route.dart';
 import 'package:bangkit/routers/landing_page.dart';
+import 'package:bangkit/web/ngo_form.dart';
 import 'package:bangkit/web/web_home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ import 'controllers/page_controller.dart';
 import 'firebase_options.dart';
 import 'routers/home_route.dart';
 import 'screens/maps/all_items_map.dart';
+import 'web/add_ngo.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/bottomRoute': (context) => BottomRouter(),
         '/homeRoute': (context) => const HomeRoute(),
         '/map': (context) => AllMap(),
+        '/AddNgo': (context) => AddNgo(),
       },
       theme: ThemeData(
         fontFamily: 'Roboto',
@@ -72,7 +75,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF00b3df)))),
       ),
-      home: const LandingPage(),
+      home: const NGOForm(),
     );
   }
 }

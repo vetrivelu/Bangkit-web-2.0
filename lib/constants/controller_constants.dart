@@ -1,5 +1,6 @@
 import 'package:bangkit/controllers/auth_controller.dart';
 import 'package:bangkit/controllers/page_controller.dart';
+import 'package:flutter/material.dart';
 
 AuthController authController = AuthController.instance;
 IndexController pageController = IndexController.instance;
@@ -1062,3 +1063,15 @@ const postalCodes = {
     {"postCode": "87033", "city": "Labuan", "region": "0"}
   ],
 };
+
+String? getState(String pincode) {
+  String? state;
+  postalCodes.forEach((key, value) {
+    for (var element in value) {
+      if (element["postCode"] == pincode) {
+        state = key;
+      }
+    }
+  });
+  return state;
+}

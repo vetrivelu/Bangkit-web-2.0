@@ -90,6 +90,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(
@@ -100,6 +101,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(
@@ -110,6 +112,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(
@@ -121,6 +124,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(
@@ -132,6 +136,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(
@@ -142,6 +147,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(
@@ -153,6 +159,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(
@@ -163,6 +170,7 @@ class _AddPostState extends State<AddPost> {
                     if (value.isEmpty) {
                       return "This is a required field";
                     }
+                    return null;
                   },
                 ),
                 CustomTextFormfieldRed(

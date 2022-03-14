@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../constants/themeconstants.dart';
+
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     Key? key,
@@ -11,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
     this.hintText,
     this.controller,
     this.suffixIcon,
+    this.validator,
   }) : super(key: key);
 
   final String? labelText;
@@ -18,51 +21,56 @@ class CustomTextFormField extends StatelessWidget {
   final String? hintText;
   final TextEditingController? controller;
   final Widget? suffixIcon;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        suffixIcon: suffixIcon,
-        labelText: labelText,
-        labelStyle: const TextStyle(
-          fontFamily: 'Lexend Deca',
-          color: Colors.grey,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        hintText: hintText,
-        hintStyle: const TextStyle(
-          fontFamily: 'Lexend Deca',
-          color: Colors.grey,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0xFFDBE2E7),
-            width: 2,
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: 60, maxWidth: getWidth(context) / 4),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        validator: validator,
+        decoration: InputDecoration(
+          suffixIcon: suffixIcon,
+          labelText: labelText,
+          labelStyle: const TextStyle(
+            fontFamily: 'Lexend Deca',
+            color: Colors.grey,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
           ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0xFFDBE2E7),
-            width: 2,
+          hintText: hintText,
+          hintStyle: const TextStyle(
+            fontFamily: 'Lexend Deca',
+            color: Colors.grey,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
           ),
-          borderRadius: BorderRadius.circular(8),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Color(0xFFDBE2E7),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Color(0xFFDBE2E7),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.8),
+          contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
         ),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.8),
-        contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-      ),
-      style: const TextStyle(
-        fontFamily: 'Lexend Deca',
-        color: Color(0xFF2B343A),
-        fontSize: 14,
-        fontWeight: FontWeight.normal,
+        style: const TextStyle(
+          fontFamily: 'Lexend Deca',
+          color: Color(0xFF2B343A),
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
       ),
     );
   }
@@ -200,24 +208,24 @@ class CustomDropDown extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xFFDBE2E7),
+            borderSide: const BorderSide(
+              color: const Color(0xFFDBE2E7),
               width: 2,
             ),
             borderRadius: BorderRadius.circular(8),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xFFDBE2E7),
+            borderSide: const BorderSide(
+              color: const Color(0xFFDBE2E7),
               width: 2,
             ),
             borderRadius: BorderRadius.circular(8),
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+          contentPadding: const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
         ),
-        style: TextStyle(
+        style: const TextStyle(
           fontFamily: 'Lexend Deca',
           color: Colors.black,
           fontSize: 14,
@@ -389,11 +397,11 @@ showFutureDialog({required BuildContext context, required Future<dynamic> future
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text("Okay"))
+                        child: const Text("Okay"))
                   ],
                 );
               }
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             });
@@ -421,11 +429,11 @@ showFuturePoponSucessDialog({required BuildContext context, required Future<dyna
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text("Okay"))
+                        child: const Text("Okay"))
                   ],
                 );
               }
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             });
@@ -497,30 +505,30 @@ class CustomDropDownFormField extends StatelessWidget {
         onChanged: onChanged,
         onTap: onTap,
         decoration: InputDecoration(
-          constraints: BoxConstraints.expand(height: 65),
+          constraints: const BoxConstraints.expand(height: 65),
           labelText: labelText,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontFamily: 'Lexend Deca',
-            color: Color(0xFFEF4C43),
+            color: const Color(0xFFEF4C43),
             fontSize: 14,
             fontWeight: FontWeight.normal,
           ),
           hintText: hintText,
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             fontFamily: 'Lexend Deca',
-            color: Color(0xFF95A1AC),
+            color: const Color(0xFF95A1AC),
             fontSize: 14,
             fontWeight: FontWeight.normal,
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Color(0xFFDBE2E7),
               width: 2,
             ),
             borderRadius: BorderRadius.circular(8),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Color(0xFFDBE2E7),
               width: 2,
             ),
@@ -528,9 +536,9 @@ class CustomDropDownFormField extends StatelessWidget {
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+          contentPadding: const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
         ),
-        style: TextStyle(
+        style: const TextStyle(
           fontFamily: 'Lexend Deca',
           color: Colors.black,
           fontSize: 14,

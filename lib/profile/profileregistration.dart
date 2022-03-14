@@ -1,4 +1,5 @@
 import 'package:bangkit/constants/controller_constants.dart';
+import 'package:bangkit/constants/themeconstants.dart';
 import 'package:bangkit/models/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -557,46 +558,49 @@ class CustomDropDownButtonformField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: DropdownButtonFormField<String>(
-        value: value,
-        onChanged: onChanged,
-        items: item,
-        decoration: InputDecoration(
-          suffixIcon: Icon2,
-          prefixIcon: Icon,
-          labelText: labelText,
-          labelStyle: const TextStyle(
-            fontFamily: 'Lexend Deca',
-            color: Colors.black,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            fontFamily: 'Lexend Deca',
-            color: Colors.black,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-              width: 1,
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: 60, maxWidth: getWidth(context) * 0.3),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: DropdownButtonFormField<String>(
+          value: value,
+          onChanged: onChanged,
+          items: item,
+          decoration: InputDecoration(
+            suffixIcon: Icon2,
+            prefixIcon: Icon,
+            labelText: labelText,
+            labelStyle: const TextStyle(
+              fontFamily: 'Lexend Deca',
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-              width: 1,
+            hintText: hintText,
+            hintStyle: const TextStyle(
+              fontFamily: 'Lexend Deca',
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
-            borderRadius: BorderRadius.circular(20),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.red,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.red,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
           ),
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
         ),
       ),
     );
@@ -630,7 +634,7 @@ class CustomTextFormfieldRed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 60),
+      constraints: BoxConstraints(minHeight: 60, maxWidth: getWidth(context) * 0.22),
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 16, 10),
         child: TextFormField(

@@ -1,6 +1,7 @@
 import 'package:bangkit/models/profile.dart';
 import 'package:bangkit/models/service_category.dart';
 import 'package:bangkit/services/firebase.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -21,6 +22,8 @@ class ServiceListController extends GetxController {
   onInit() {
     reloadServices();
   }
+
+  List<DropdownMenuItem<String>> get items => service!.map((e) => DropdownMenuItem<String>(value: e, child: Text(e.toString()))).toList();
 
   reloadServices() async {
     service = await NgoService.getServices();

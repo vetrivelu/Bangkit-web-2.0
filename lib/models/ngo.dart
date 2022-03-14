@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:bangkit/models/response.dart';
 import 'package:bangkit/services/firebase.dart';
 
 Ngo ngoFromJson(String str) => Ngo.fromJson(json.decode(str));
@@ -101,7 +102,7 @@ class Ngo {
         "urlSocialMedia": urlSocialMedia,
       };
 
-  static Future<dynamic> addNgo(Ngo ngo) async {
+  static Future<Response> addNgo(Ngo ngo) async {
     return firestore.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(counters);
       if (snapshot.exists) {
@@ -110,10 +111,10 @@ class Ngo {
         return transaction.update(counters, {"ngos": ngo.id}).set(ngos.doc(ngo.id.toString()), ngo.toJson());
       }
     }).then((value) {
-      return {"code": "Success", "message": "Added"};
+      return Response.success("Entity added successfully");
     }).catchError((error) {
       print(error);
-      return {"code": "Failed", "message": error.toString()};
+      return Response.error(error);
     });
   }
 

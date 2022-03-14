@@ -2,6 +2,8 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:cloud_functions/cloud_functions.dart';
 export 'dart:convert';
 export './auth.dart';
+import 'dart:typed_data';
+
 import 'package:path/path.dart';
 
 import 'dart:io';
@@ -37,7 +39,7 @@ DocumentReference<Map<String, dynamic>> counters = firestore.collection('globalD
 DocumentReference<Map<String, dynamic>> damLinks = firestore.collection('globalData').doc('DamLinks');
 DocumentReference<Map<String, dynamic>> markerInfos = firestore.collection('globalData').doc('MarkerInfo');
 
-Future<String> uploadFile(File file) async {
-  var url = await storage.ref("pics").child(basename(file.path)).putBlob(file.readAsBytes()).snapshot.ref.getDownloadURL();
+Future<String> uploadFile(Uint8List file, String name) async {
+  var url = await storage.ref("pics").child(name).putData(file).snapshot.ref.getDownloadURL();
   return url;
 }
