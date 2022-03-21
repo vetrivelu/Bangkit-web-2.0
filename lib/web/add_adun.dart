@@ -1,12 +1,9 @@
 import 'dart:ui';
 
 import 'package:bangkit/constants/constituency_list.dart';
-import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/models/adun.dart';
 import 'package:bangkit/profile/profileregistration.dart';
-import 'package:bangkit/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:bangkit/models/ngo.dart';
 import '../profile/profileregistration.dart';
 
 import 'package:get/get.dart';
@@ -20,15 +17,10 @@ class AddAdun extends StatefulWidget {
 
 class _AddAdunState extends State<AddAdun> {
   final nameController = TextEditingController();
-
   final addressController = TextEditingController();
-
   final postCodeController = TextEditingController();
-
   final phoneNumberController = TextEditingController();
-
   final emailController = TextEditingController();
-
   final descriptioncontroller = TextEditingController();
   final imageController = TextEditingController();
   final stateController = TextEditingController();
@@ -89,7 +81,8 @@ class _AddAdunState extends State<AddAdun> {
                     padding: EdgeInsets.all(16.0),
                     child: Text(
                       "Add ADUN",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                   ),
                   CustomTextFormfieldRed(
@@ -196,7 +189,10 @@ class _AddAdunState extends State<AddAdun> {
                         selectedFederal = federalList.first;
                       });
                     },
-                    item: federals.keys.map((e) => DropdownMenuItem(child: Text(e.toString()), value: e.toString())).toList(),
+                    item: federals.keys
+                        .map((e) => DropdownMenuItem(
+                            child: Text(e.toString()), value: e.toString()))
+                        .toList(),
                   ),
                   CustomDropDownButtonformField(
                     labelText: "Federal constituency",
@@ -206,7 +202,10 @@ class _AddAdunState extends State<AddAdun> {
                         selectedFederal = value ?? selectedFederal;
                       });
                     },
-                    item: federalList.map((e) => DropdownMenuItem(value: e.toString(), child: Text(e.toString()))).toList(),
+                    item: federalList
+                        .map((e) => DropdownMenuItem(
+                            value: e.toString(), child: Text(e.toString())))
+                        .toList(),
                   ),
                   const SizedBox(height: 10),
                 ],

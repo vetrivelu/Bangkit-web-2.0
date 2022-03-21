@@ -1,5 +1,7 @@
+import 'package:bangkit/models/ngo.dart';
 import 'package:bangkit/routers/bottom_route.dart';
 import 'package:bangkit/routers/landing_page.dart';
+import 'package:bangkit/web/add_adun.dart';
 import 'package:bangkit/web/ngo_form.dart';
 import 'package:bangkit/web/web_home.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'firebase_options.dart';
 import 'routers/home_route.dart';
 import 'screens/maps/all_items_map.dart';
 import 'web/add_ngo.dart';
+import 'web/adun_form.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +48,11 @@ class MyApp extends StatelessWidget {
         '/bottomRoute': (context) => BottomRouter(),
         '/homeRoute': (context) => const HomeRoute(),
         '/map': (context) => AllMap(),
-        '/AddNgo': (context) => AddNgo(),
+        '/NGOForm': (context) => const NGOForm(
+              entity: EntityType.private,
+            ),
+        '/AddAdun': (context) => AddAdun(),
+        '/AdunForm': (context) => AdunForm(),
       },
       theme: ThemeData(
         fontFamily: 'Roboto',
@@ -59,7 +66,8 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xFFF5F5F5),
         bottomAppBarTheme: const BottomAppBarTheme(),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(elevation: 5, backgroundColor: Colors.blue),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            elevation: 5, backgroundColor: Colors.blue),
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
         chipTheme: const ChipThemeData(
           elevation: 4,
@@ -73,9 +81,12 @@ class MyApp extends StatelessWidget {
           labelStyle: TextStyle(color: Colors.white),
           secondarySelectedColor: Color(0xFF63e5ff),
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF00b3df)))),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(const Color(0xFF00b3df)))),
       ),
-      home: const NGOForm(),
+      home: const LandingPage(),
     );
   }
 }

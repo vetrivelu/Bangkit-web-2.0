@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.suffixIcon,
     this.validator,
+    this.onChanged,
   }) : super(key: key);
 
   final String? labelText;
@@ -22,54 +23,63 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 60, maxWidth: getWidth(context) / 4),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        validator: validator,
-        decoration: InputDecoration(
-          suffixIcon: suffixIcon,
-          labelText: labelText,
-          labelStyle: const TextStyle(
-            fontFamily: 'Lexend Deca',
-            color: Colors.grey,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            fontFamily: 'Lexend Deca',
-            color: Colors.grey,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Color(0xFFDBE2E7),
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Color(0xFFDBE2E7),
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.8),
-          contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+      constraints:
+          BoxConstraints(minHeight: 60, maxWidth: getWidth(context) / 4),
+      child: ListTile(
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Text(labelText ?? ''),
         ),
-        style: const TextStyle(
-          fontFamily: 'Lexend Deca',
-          color: Color(0xFF2B343A),
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
+        subtitle: TextFormField(
+          onChanged: onChanged,
+          controller: controller,
+          obscureText: obscureText,
+          validator: validator,
+          decoration: InputDecoration(
+            suffixIcon: suffixIcon,
+            // labelText: labelText,
+            labelStyle: const TextStyle(
+              fontFamily: 'Lexend Deca',
+              color: Colors.grey,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+            hintText: hintText,
+            hintStyle: const TextStyle(
+              fontFamily: 'Lexend Deca',
+              color: Colors.grey,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Color(0xFFDBE2E7),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Color(0xFFDBE2E7),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            filled: true,
+            fillColor: Colors.white.withOpacity(0.8),
+            contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+          ),
+          style: const TextStyle(
+            fontFamily: 'Lexend Deca',
+            color: Color(0xFF2B343A),
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+          ),
         ),
       ),
     );
@@ -352,7 +362,9 @@ class _VideoAppState extends State<VideoApp> {
     return Scaffold(
       body: Center(
         child: _controller.value.isInitialized
-            ? SizedBox(width: MediaQuery.of(context).size.width * 0.90, child: VideoPlayer(_controller))
+            ? SizedBox(
+                width: MediaQuery.of(context).size.width * 0.90,
+                child: VideoPlayer(_controller))
             : Container(),
       ),
       // floatingActionButtonLocation : FloatingActionButtonLocation.centerFloat,
@@ -379,7 +391,8 @@ class _VideoAppState extends State<VideoApp> {
   }
 }
 
-showFutureDialog({required BuildContext context, required Future<dynamic> future}) {
+showFutureDialog(
+    {required BuildContext context, required Future<dynamic> future}) {
   print("I am in future dialog");
   showDialog(
       context: context,
@@ -387,7 +400,8 @@ showFutureDialog({required BuildContext context, required Future<dynamic> future
         return FutureBuilder(
             future: future,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.connectionState == ConnectionState.active ||
+                  snapshot.connectionState == ConnectionState.done) {
                 var response = snapshot.data as Response;
                 return AlertDialog(
                   title: Text(response.code),
@@ -408,7 +422,8 @@ showFutureDialog({required BuildContext context, required Future<dynamic> future
       });
 }
 
-showFuturePoponSucessDialog({required BuildContext context, required Future<dynamic> future}) {
+showFuturePoponSucessDialog(
+    {required BuildContext context, required Future<dynamic> future}) {
   print("I am in future dialog");
   showDialog(
       context: context,
@@ -416,7 +431,8 @@ showFuturePoponSucessDialog({required BuildContext context, required Future<dyna
         return FutureBuilder(
             future: future,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.connectionState == ConnectionState.active ||
+                  snapshot.connectionState == ConnectionState.done) {
                 var response = snapshot.data as Response;
                 if (response.code == "success") {
                   Navigator.of(context).pop();
@@ -440,14 +456,18 @@ showFuturePoponSucessDialog({required BuildContext context, required Future<dyna
       });
 }
 
-showFutureCustomDialog({required BuildContext context, required Future<dynamic> future, required void Function()? onTapOk}) {
+showFutureCustomDialog(
+    {required BuildContext context,
+    required Future<dynamic> future,
+    required void Function()? onTapOk}) {
   showDialog(
       context: context,
       builder: (context) {
         return FutureBuilder(
             future: future,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.connectionState == ConnectionState.active ||
+                  snapshot.connectionState == ConnectionState.done) {
                 var response = snapshot.data as Response;
                 if (response.code == "success") {
                   Navigator.of(context).pop();

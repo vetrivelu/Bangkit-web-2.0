@@ -93,7 +93,8 @@ class _AddrebuildState extends State<Addrebuild> {
                     padding: EdgeInsets.all(16.0),
                     child: Text(
                       "Add rebuild",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                   ),
                   CustomTextFormfieldRed(
@@ -104,6 +105,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -115,6 +117,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -126,6 +129,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -137,6 +141,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -149,6 +154,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -163,6 +169,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (!emailController.text.isEmail) {
                         return "Enter a valid email";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -174,6 +181,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -185,6 +193,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -196,6 +205,7 @@ class _AddrebuildState extends State<Addrebuild> {
                       if (value.isEmpty) {
                         return "This is a required field";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(

@@ -92,7 +92,7 @@ class Ngo {
         "props": props,
         // "type": type.index ??,
         "entityType": entityType != null ? entityType!.index : null,
-        "serviceType": entityType != null ? serviceType!.index : null,
+        "serviceType": serviceType != null ? serviceType!.index : null,
         "modifiedDate": DateTime.now(),
         "postCode": postCode,
         "searchText": searchString,
@@ -108,7 +108,10 @@ class Ngo {
       if (snapshot.exists) {
         var data = snapshot.data() as Map<String, dynamic>;
         ngo.id = data['ngos'] + 1;
-        return transaction.update(counters, {"ngos": ngo.id}).set(ngos.doc(ngo.id.toString()), ngo.toJson());
+        return transaction.update(counters, {"ngos": ngo.id}).set(
+          ngos.doc(ngo.id.toString()),
+          ngo.toJson(),
+        );
       }
     }).then((value) {
       return Response.success("Entity added successfully");
@@ -118,13 +121,22 @@ class Ngo {
     });
   }
 
-  update() {
-    print("id============================$id");
-    return ngos.doc(id.toString()).update(toJson()).then((value) => print("sucess"));
+  Future<Response> update() {
+    return ngos
+        .doc(id.toString())
+        .update(toJson())
+        .then((value) => Response.success("Entity update successful"));
   }
 
   delete() {
-    ngos.doc(id.toString()).delete().then((value) => {"code": "success", "message": "NGO has been deleted"}).catchError((error) {
+    try {
+      storage.refFromURL(image).delete();
+    } catch (e) {}
+    ngos
+        .doc(id.toString())
+        .delete()
+        .then((value) => {"code": "success", "message": "NGO has been deleted"})
+        .catchError((error) {
       return {"code": "Failed", "message": error.toString()};
     });
   }
@@ -152,13 +164,16 @@ class Ngo {
       query = query.where("entityType", isEqualTo: entityType.index);
     }
     if (serviceTypes != null) {
-      query = query.where("serviceTypes", arrayContainsAny: serviceTypes.map((e) => e.index).toList());
+      query = query.where("serviceTypes",
+          arrayContainsAny: serviceTypes.map((e) => e.index).toList());
     }
     if (serviceTypes != null) {
-      query = query.where("serviceTypes", arrayContainsAny: serviceTypes.map((e) => e.index).toList());
+      query = query.where("serviceTypes",
+          arrayContainsAny: serviceTypes.map((e) => e.index).toList());
     }
     if (serviceTypes != null) {
-      query = query.where("serviceTypes", arrayContainsAny: serviceTypes.map((e) => e.index).toList());
+      query = query.where("serviceTypes",
+          arrayContainsAny: serviceTypes.map((e) => e.index).toList());
     }
     return query;
   }

@@ -1,3 +1,4 @@
+import 'package:bangkit/models/response.dart';
 import 'package:bangkit/services/firebase.dart';
 
 class Adun {
@@ -55,27 +56,41 @@ class Adun {
         "weburl": weburl,
         "federal": federal,
       };
-  static Future<dynamic> addAdun(Adun adun) async {
+  static Future<Response> addAdun(Adun adun) async {
     return firestore.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(counters);
       if (snapshot.exists) {
         var data = snapshot.data() as Map<String, dynamic>;
         adun.id = data['aduns'] + 1;
-        return transaction.update(counters, {"aduns": adun.id}).set(aduns.doc(adun.id.toString()), adun.toJson());
+        return transaction.update(counters, {"aduns": adun.id}).set(
+            aduns.doc(adun.id.toString()), adun.toJson());
       }
     }).then((value) {
-      return {"code": "Success", "message": "Added"};
+      return Response.success("Adun added successfully");
     }).catchError((error) {
-      return {"code": "Failed", "message": error.toString()};
+      return Response.error("Error occured");
     });
   }
 
-  delete() {
-    return aduns.doc(id.toString()).delete();
+  Future<Response> delete() {
+    try {
+      if (image.startsWith("https://firebasestorage.googleapis.com")) {
+        storage.refFromURL(image).delete();
+      }
+    } catch (e) {}
+    return aduns
+        .doc(id.toString())
+        .delete()
+        .then((value) => Response.success("Deleted Sucessfully"))
+        .onError((error, stackTrace) => Response.error(error));
   }
 
-  update() {
-    return aduns.doc(id.toString()).update(toJson());
+  Future<Response> update() {
+    return aduns
+        .doc(id.toString())
+        .update(toJson())
+        .then((value) => Response.success("Adun updated successfully"))
+        .onError((error, stackTrace) => Response.error(error));
   }
 
   static list(String? postCode) {

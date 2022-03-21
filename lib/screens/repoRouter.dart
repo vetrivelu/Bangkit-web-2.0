@@ -3,6 +3,7 @@
 import 'package:bangkit/models/ngo.dart';
 import 'package:bangkit/web/edit_agency.dart';
 import 'package:bangkit/web/edit_ngo.dart';
+import 'package:bangkit/web/ngo_form.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -36,11 +37,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
             children: [
               IconButton(
                   onPressed: () {
-                    if (widget.ngo.entityType == EntityType.private) {
-                      Get.to(() => EditNgo(ngo: widget.ngo));
-                    } else {
-                      Get.to(() => EditAgency(ngo: widget.ngo));
-                    }
+                    Get.to(NGOForm(
+                        ngo: widget.ngo,
+                        entity: widget.ngo.entityType ?? EntityType.private));
                   },
                   icon: const Icon(Icons.edit)),
               GestureDetector(
@@ -53,7 +52,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                           content: FutureBuilder(
                               future: widget.ngo.delete(),
                               builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.active ||
+                                    snapshot.connectionState ==
+                                        ConnectionState.done) {
                                   return const Text("Successfully deleted");
                                 }
                                 if (snapshot.hasError) {
@@ -90,7 +92,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
             ? Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Text(
-                  widget.ngo.description + "\n\nService Type : ${widget.ngo.service}",
+                  widget.ngo.description +
+                      "\n\nService Type : ${widget.ngo.service}",
                   maxLines: 2,
                   softWrap: true,
                   style: const TextStyle(overflow: TextOverflow.ellipsis),
@@ -128,7 +131,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                 ),
                 Flexible(
                   child: Text(
-                    widget.ngo.address + ",${widget.ngo.postCode}, ${widget.ngo.state}",
+                    widget.ngo.address +
+                        ",${widget.ngo.postCode}, ${widget.ngo.state}",
                     maxLines: 3,
                     softWrap: true,
                     style: const TextStyle(overflow: TextOverflow.clip),

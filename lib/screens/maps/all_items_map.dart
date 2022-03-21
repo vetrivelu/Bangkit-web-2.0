@@ -35,13 +35,15 @@ class _AllMapState extends State<AllMap> {
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: areas.snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
-            List<QueryDocumentSnapshot<Map<String, dynamic>>> documents = snapshot.data!.docs;
-            List<Area> areas = documents.map((e) => Area.fromJson(e.data())).toList();
+          if (snapshot.connectionState == ConnectionState.active &&
+              snapshot.hasData) {
+            List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+                snapshot.data!.docs;
+            List<Area> areas =
+                documents.map((e) => Area.fromJson(e.data())).toList();
             markers.clear();
             markers = areas
                 .map((e) => e.getMarker(() {
-                      print("Hello");
                       Get.to(() => AreaView(area: e));
                     }))
                 .toList();
@@ -68,7 +70,7 @@ class _AllMapState extends State<AllMap> {
             //     consumeTapEvents: true,
             //     infoWindow: InfoWindow(title: e.location.toString(), onTap: () => Get.to(() => AreaView(area: e))),
             //     onTap: () {
-            //       print("Hello");
+
             //     },);
 
             if (markers.isNotEmpty) {
@@ -90,7 +92,6 @@ class _AllMapState extends State<AllMap> {
               id != 0 ? gmaps.dispose(mapId: id - 1) : doNothing();
               gmaps.onTap(mapId: id).listen((event) {
                 _prevMarkers = markers;
-                print("Hello");
                 Get.to(() => AreaView(
                       coordinates: event.position,
                     ));

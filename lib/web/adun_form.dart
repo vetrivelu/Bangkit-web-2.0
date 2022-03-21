@@ -1,44 +1,51 @@
-import 'package:bangkit/constants/controller_constants.dart';
-import 'package:bangkit/constants/postal_codes.dart';
-import 'package:bangkit/constants/themeconstants.dart';
-import 'package:bangkit/models/ngo.dart';
-import 'package:bangkit/web/formcontrollers.dart/ngo_formcontroller.dart';
-import 'package:bangkit/widgets/widgets.dart';
+import 'package:bangkit/models/response.dart';
 import 'package:flutter/material.dart';
 
-class NGOForm extends StatefulWidget {
-  const NGOForm({Key? key, this.ngo, required this.entity}) : super(key: key);
+import '../constants/postal_codes.dart';
+import '../constants/themeconstants.dart';
+import '../models/adun.dart';
+import '../widgets/widgets.dart';
+import 'formcontrollers.dart/adun_formController.dart';
 
-  final Ngo? ngo;
-  final EntityType entity;
+enum Provide { network, memory, logo }
+
+class AdunForm extends StatefulWidget {
+  AdunForm({Key? key, this.adun}) : super(key: key);
+
+  final Adun? adun;
 
   @override
-  State<NGOForm> createState() => _NGOFormState();
+  State<AdunForm> createState() => _AdunFormState();
 }
 
-class _NGOFormState extends State<NGOForm> {
+class _AdunFormState extends State<AdunForm> {
+  var future;
+  late AdunFormController controller;
   Provide show = Provide.logo;
 
   @override
   void initState() {
-    super.initState();
-    if (widget.ngo != null) {
-      controller = NGOFormController.fromNgo(widget.ngo!);
-      show = Provide.network;
+    if (widget.adun == null) {
+      controller = AdunFormController();
+      controller.setState = PostalCodes.data.keys.first;
     } else {
-      controller = NGOFormController(type: widget.entity);
+      controller = AdunFormController.fromAdun(widget.adun!);
+      if ((controller.image ?? '').isNotEmpty) {
+        show = Provide.network;
+      }
     }
+    super.initState();
+  }
+
+  String? requiredValidator(String? val) {
+    var text = val ?? '';
+    if (text.isEmpty) {
+      return "This is a required field";
+    }
+    return null;
   }
 
   ImageProvider getAvatar() {
-    // if (controller.image != null) {
-    //   return NetworkImage(controller.image!);
-    // } else if (controller.fileData != null) {
-    //   return MemoryImage(controller.fileData!);
-    // } else {
-    //   return const AssetImage('assets/bina.png');
-    // }
-
     switch (show) {
       case Provide.network:
         return NetworkImage(controller.image!);
@@ -54,15 +61,7 @@ class _NGOFormState extends State<NGOForm> {
     }
   }
 
-  String? requiredValidator(String? val) {
-    var text = val ?? '';
-    if (text.isEmpty) {
-      return "This is a required field";
-    }
-    return null;
-  }
-
-  late NGOFormController controller;
+  Adun? get adun => widget.adun;
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -70,6 +69,7 @@ class _NGOFormState extends State<NGOForm> {
     return Row(
       children: [
         Expanded(
+          flex: 2,
           child: Container(
             color: Colors.lightBlue,
             child: Column(
@@ -110,9 +110,9 @@ class _NGOFormState extends State<NGOForm> {
               ],
             ),
           ),
-          flex: 2,
         ),
         Expanded(
+          flex: 8,
           child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -121,14 +121,12 @@ class _NGOFormState extends State<NGOForm> {
                 IconButton(
                     onPressed: () {
                       setState(() {
-                        controller.name.text = "Public Helpers";
-                        controller.contactPersonName.text = "Vetri";
+                        controller.name.text = "Vetri";
                         controller.address.text = "225, North Street";
                         controller.phoneNumber.text = "+61898709";
                         controller.email.text = "test@testemail.com";
-                        controller.urlWeb.text = "www.google.com";
+                        controller.weburl.text = "www.google.com";
                         controller.description.text = "Test Description";
-                        controller.urlSocialMedia.text = "www.google.com";
                       });
                     },
                     icon: const Icon(
@@ -143,75 +141,49 @@ class _NGOFormState extends State<NGOForm> {
             floatingActionButton: ElevatedButton(
               onPressed: () {
                 if (_formkey.currentState!.validate()) {
-                  var future;
-                  if (controller.object != null) {
-                    if (controller.object?.id == null) {
-                      future = controller.add();
-                    } else {
-                      future = controller.update();
-                    }
-                    try {
-                      // future.then((value) => null);
-                      showFutureCustomDialog(
-                          context: context,
-                          future: future,
-                          onTapOk: () {
-                            Navigator.of(context).pop();
-                          });
-                    } catch (e) {
-                      print(e.toString());
-                    }
+                  if (widget.adun != null) {
+                    future = controller.update();
                   } else {
-                    print("==========================");
+                    future = controller.add();
                   }
-                } else {
-                  print("Hle");
+                  showFutureCustomDialog(
+                      context: context, future: future, onTapOk: () {});
                 }
               },
               child: const Text("Submit"),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Form(
-                key: _formkey,
-                child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child:
-                          Text("NGO Details", style: TextStyle(fontSize: 40)),
-                    ),
-                    Card(
-                      color: const Color.fromARGB(255, 208, 228, 238),
-                      margin: const EdgeInsets.all(16),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Card(
+                    color: const Color(0xffCAE5F5),
+                    margin: const EdgeInsets.all(16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Form(
+                        key: _formkey,
                         child: Wrap(
                           runAlignment: WrapAlignment.center,
                           alignment: WrapAlignment.start,
                           spacing: 8,
                           runSpacing: 8,
                           children: [
-                            const SizedBox(
-                              width: double.maxFinite,
-                              height: 60,
+                            const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text("ADUN Details",
+                                    style: TextStyle(fontSize: 40)),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Divider(),
                             ),
                             CustomTextFormField(
                               controller: controller.name,
                               labelText: 'Name',
                               validator: requiredValidator,
                             ),
-                            CustomTextFormField(
-                              controller: controller.contactPersonName,
-                              labelText: 'Contact Person Name',
-                              validator: requiredValidator,
-                            ),
-                            CustomTextFormField(
-                              controller: controller.address,
-                              labelText: 'Address',
-                              validator: requiredValidator,
-                            ),
-                            // DropdownButtonFormField<String>(items: items, onChanged: (String? value) {}),
                             CustomTextFormField(
                               controller: controller.phoneNumber,
                               labelText: 'Phone Number',
@@ -223,25 +195,32 @@ class _NGOFormState extends State<NGOForm> {
                               validator: requiredValidator,
                             ),
                             CustomTextFormField(
-                              controller: TextEditingController(
-                                  text: controller.image ?? ''),
-                              labelText: 'Image Url',
+                              controller: controller.address,
+                              labelText: 'Address',
+                              validator: requiredValidator,
+                            ),
+                            CustomTextFormField(
+                              controller: controller.weburl,
+                              labelText: 'Web / Social Media Reference',
+                              validator: requiredValidator,
+                            ),
+                            CustomTextFormField(
+                              controller: controller.imageUrl,
+                              labelText: 'Image URL',
                               onChanged: (text) {
                                 controller.image = text;
                               },
-                            ),
-                            CustomTextFormField(
-                              controller: controller.urlWeb,
-                              labelText: 'Web Reference',
-                              validator: requiredValidator,
+                              // validator: requiredValidator,
                             ),
                             CustomTextFormField(
                               controller: controller.description,
                               labelText: 'Description',
                               validator: requiredValidator,
                             ),
-
-                            const SizedBox(width: double.maxFinite),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Divider(),
+                            ),
                             SizedBox(
                               width: getWidth(context) / 4,
                               child: ListTile(
@@ -251,13 +230,8 @@ class _NGOFormState extends State<NGOForm> {
                                   items: controller.stateItems,
                                   onChanged: (String? value) {
                                     setState(() {
-                                      controller.state =
-                                          value ?? controller.state;
-                                      controller.postCode =
-                                          PostalCodes.getCodes(
-                                                  controller.state!)
-                                              .first
-                                              .toString();
+                                      controller.setState =
+                                          value ?? controller.firstState;
                                     });
                                   },
                                 ),
@@ -282,34 +256,31 @@ class _NGOFormState extends State<NGOForm> {
                             SizedBox(
                               width: getWidth(context) / 4,
                               child: ListTile(
-                                title: const Text("Service"),
+                                title: const Text("Federal Constituency"),
                                 subtitle: DropdownButtonFormField<String>(
-                                  value: controller.service,
-                                  items: serviceListController.items,
+                                  items: controller.federalItems,
+                                  value: controller.federal,
                                   onChanged: (String? value) {
-                                    controller.service =
-                                        value ?? controller.service;
+                                    setState(() {
+                                      controller.federal =
+                                          value ?? controller.federal;
+                                    });
                                   },
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 120,
-                            )
+                            const SizedBox(width: double.maxFinite),
                           ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
           ),
-          flex: 8,
         ),
       ],
     );
   }
 }
-
-enum Provide { network, memory, logo }
