@@ -1,7 +1,7 @@
 import 'package:bangkit/models/ngo.dart';
 import 'package:bangkit/routers/bottom_route.dart';
 import 'package:bangkit/routers/landing_page.dart';
-import 'package:bangkit/web/add_adun.dart';
+
 import 'package:bangkit/web/ngo_form.dart';
 import 'package:bangkit/web/post_form.dart';
 import 'package:bangkit/web/web_home.dart';
@@ -14,7 +14,7 @@ import 'controllers/page_controller.dart';
 import 'firebase_options.dart';
 import 'routers/home_route.dart';
 import 'screens/maps/all_items_map.dart';
-import 'web/add_ngo.dart';
+
 import 'web/adun_form.dart';
 
 Future<void> main() async {
@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
               entity: EntityType.private,
             ),
         '/Postform': (context) => PostForm(),
-        '/AddAdun': (context) => AddAdun(),
         '/AdunForm': (context) => AdunForm(),
       },
       theme: ThemeData(

@@ -1,8 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:bangkit/models/ngo.dart';
-import 'package:bangkit/web/edit_agency.dart';
-import 'package:bangkit/web/edit_ngo.dart';
+
 import 'package:bangkit/web/ngo_form.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

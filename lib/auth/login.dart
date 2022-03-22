@@ -76,43 +76,33 @@ class _SignInWidgetState extends State<SignInWidget> {
                                         scale: 0.1,
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                      child: Expanded(
-                                        child: CustomTextFormField(
-                                          hintText: 'Enter your email',
-                                          labelText: 'Email',
-                                          controller: emailController,
-                                        ),
-                                      ),
+                                    CustomTextFormField(
+                                      hintText: 'Enter your email',
+                                      labelText: 'Email',
+                                      controller: emailController,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                      child: Expanded(
-                                        child: CustomTextFormField(
-                                          controller: passwordController,
-                                          hintText: 'Enter your password',
-                                          labelText: 'Password',
-                                          obscureText: obscureText,
-                                          suffixIcon: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                obscureText = !obscureText;
-                                              });
-                                            },
-                                            child: obscureText
-                                                ? const Icon(
-                                                    Icons.visibility_off_outlined,
-                                                    color: Colors.black,
-                                                    size: 22,
-                                                  )
-                                                : const Icon(
-                                                    Icons.visibility_outlined,
-                                                    color: Colors.black,
-                                                    size: 22,
-                                                  ),
-                                          ),
-                                        ),
+                                    CustomTextFormField(
+                                      controller: passwordController,
+                                      hintText: 'Enter your password',
+                                      labelText: 'Password',
+                                      obscureText: obscureText,
+                                      suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            obscureText = !obscureText;
+                                          });
+                                        },
+                                        child: obscureText
+                                            ? const Icon(
+                                                Icons.visibility_off_outlined,
+                                                color: Colors.black,
+                                                size: 22,
+                                              )
+                                            : const Icon(
+                                                Icons.visibility_outlined,
+                                                color: Colors.black,
+                                                size: 22,
+                                              ),
                                       ),
                                     ),
                                     Padding(

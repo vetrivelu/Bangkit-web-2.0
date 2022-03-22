@@ -1,6 +1,7 @@
 import 'package:bangkit/auth/login.dart';
 import 'package:bangkit/constants/controller_constants.dart';
 import 'package:bangkit/screens/home.dart';
+import 'package:bangkit/screens/mainscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
