@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 .dart_tool/
 build/
 
 .flutter-plugins
+=======
+
+.dart_tool/
+build/
+>>>>>>> origin/login-page
 .flutter-plugins-dependencies
 .packages
