@@ -40,7 +40,7 @@ class AdunFormController {
   Future<Response> add() async {
     if (fileData != null) {
       try {
-        return uploadFile(fileData!, name.text).then((value) {
+        return uploadImage(fileData!, name.text).then((value) {
           image = value;
           return Adun.addAdun(adun!);
         });
@@ -54,7 +54,7 @@ class AdunFormController {
   Future<Response> update() async {
     if (fileData != null) {
       try {
-        return uploadFile(fileData!, name.text).then((value) {
+        return uploadImage(fileData!, name.text).then((value) {
           storage.refFromURL(image ?? '').delete();
           image = value;
           return adun!.update();

@@ -77,7 +77,7 @@ class NGOFormController {
   Future<Response> add() async {
     if (fileData != null) {
       try {
-        return uploadFile(fileData!, name.text).then((value) {
+        return uploadImage(fileData!, name.text).then((value) {
           image = value;
           return Ngo.addNgo(object!);
         });
@@ -91,7 +91,7 @@ class NGOFormController {
   Future<Response> update() async {
     if (fileData != null) {
       try {
-        return uploadFile(fileData!, name.text).then((value) {
+        return uploadImage(fileData!, name.text).then((value) {
           storage.refFromURL(image ?? '').delete();
           image = value;
           return object!.update();

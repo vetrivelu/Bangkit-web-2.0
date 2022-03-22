@@ -95,7 +95,7 @@ class _AddPostState extends State<AddPost> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(value["message"].toString()),
+                    title: Text(value.message),
                     actions: [
                       TextButton(
                         onPressed: () {

@@ -62,7 +62,7 @@ class _AddNgoState extends State<AddNgo> {
     if (result != null) {
       _file = result.files.first.bytes;
       name = result.files.first.name;
-      uploadFile(_file!, name!).then((value) {
+      uploadImage(_file!, name!).then((value) {
         print(value);
         setState(() {
           imageUrl = value;
@@ -139,11 +139,14 @@ class _AddNgoState extends State<AddNgo> {
                     children: [
                       CircleAvatar(
                         maxRadius: double.maxFinite,
-                        child: imageUrl != null ? Image.network(imageUrl!) : Image.asset('assets/bina.png'),
+                        child: imageUrl != null
+                            ? Image.network(imageUrl!)
+                            : Image.asset('assets/bina.png'),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(onPressed: chooseFile, child: const Text("Upload")),
+                        child: ElevatedButton(
+                            onPressed: chooseFile, child: const Text("Upload")),
                       ),
                     ],
                   ),
@@ -159,7 +162,8 @@ class _AddNgoState extends State<AddNgo> {
                           padding: EdgeInsets.all(16.0),
                           child: Text(
                             "Add NGO",
-                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
                           ),
                         ),
                         Wrap(
@@ -285,7 +289,10 @@ class _AddNgoState extends State<AddNgo> {
                                   selectedService = value ?? selectedService;
                                 });
                               },
-                              item: services.map((e) => DropdownMenuItem(value: e, child: Text(e.toString()))).toList(),
+                              item: services
+                                  .map((e) => DropdownMenuItem(
+                                      value: e, child: Text(e.toString())))
+                                  .toList(),
                             ),
                           ],
                         ),

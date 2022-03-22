@@ -49,9 +49,17 @@ DocumentReference<Map<String, dynamic>> damLinks =
 DocumentReference<Map<String, dynamic>> markerInfos =
     firestore.collection('globalData').doc('MarkerInfo');
 
-Future<String> uploadFile(Uint8List file, String name) async {
+Future<String> uploadImage(Uint8List file, String name) async {
   var ref = storage
       .ref("pics")
+      .child(name + DateTime.now().microsecondsSinceEpoch.toString());
+  var url = ref.putData(file).then((p0) => p0.ref.getDownloadURL());
+  return url;
+}
+
+Future<String> uploadFiles(Uint8List file, String name) async {
+  var ref = storage
+      .ref("files")
       .child(name + DateTime.now().microsecondsSinceEpoch.toString());
   var url = ref.putData(file).then((p0) => p0.ref.getDownloadURL());
   return url;

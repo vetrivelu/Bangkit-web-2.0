@@ -160,7 +160,7 @@ class _EditPostState extends State<EditPost> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(value["message"].toString()),
+                    title: Text(value.message.toString()),
                     actions: [
                       TextButton(
                         onPressed: () {

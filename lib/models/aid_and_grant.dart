@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:bangkit/constants/controller_constants.dart';
+import 'package:bangkit/models/response.dart';
 import 'package:bangkit/services/firebase.dart';
 
 Post postFromJson(String str) => Post.fromJson(json.decode(str));
@@ -77,44 +78,60 @@ class Post {
         "id": id,
         "title": title,
         "description": description,
-        "media": media != null ? List<dynamic>.from(media!.map((x) => x)) : media,
-        "attachments": attachments == null ? [] : List<dynamic>.from(attachments!.map((x) => x)),
-        "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x)),
+        "media":
+            media != null ? List<dynamic>.from(media!.map((x) => x)) : media,
+        "attachments": attachments == null
+            ? []
+            : List<dynamic>.from(attachments!.map((x) => x)),
+        "videos":
+            videos == null ? [] : List<dynamic>.from(videos!.map((x) => x)),
         "name": name,
         "address": address,
         "state": state,
         "pincode": pincode,
         "phone": phone,
         "email": email,
-        "ratings": ratings == null ? [] : List<dynamic>.from(ratings!.map((x) => x.toJson())),
+        "ratings": ratings == null
+            ? []
+            : List<dynamic>.from(ratings!.map((x) => x.toJson())),
         "created": created,
-        "updated": updated,
+        "updated": DateTime.now(),
       };
 
-  update() {
-    return posts.doc(id.toString()).update(toJson()).then((value) => "success").catchError((onError) => onError.toString());
+  Future<Response> update() {
+    return posts
+        .doc(id.toString())
+        .update(toJson())
+        .then((value) => Response.success("Updated Successfuly"))
+        .catchError(
+            (onError) => Response.error("Error occured, Please try again"));
   }
 
-  static Future<dynamic> addPost(Post post) async {
+  static Future<Response> addPost(Post post) async {
     post.created = DateTime.now();
-    post.updated = DateTime.now();
+
     print(post.toJson());
     return firestore.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(counters);
       if (snapshot.exists) {
         var data = snapshot.data() as Map<String, dynamic>;
         post.id = (data['posts'] ?? 0) + 1;
-        return transaction.update(counters, {"posts": post.id}).set(posts.doc(post.id.toString()), post.toJson());
+        return transaction.update(counters, {"posts": post.id}).set(
+            posts.doc(post.id.toString()), post.toJson());
       }
     }).then((value) {
-      return {"code": "Success", "message": "Added"};
+      return Response.success("Post added successfullly");
     }).catchError((error) {
-      return {"code": "Failed", "message": error.toString()};
+      return Response.error("Error occured. Please try again");
     });
   }
 
   deletePost() {
-    posts.doc(id.toString()).delete().then((value) => {"code": "success", "message": "deleted"}).catchError((error) {
+    posts
+        .doc(id.toString())
+        .delete()
+        .then((value) => {"code": "success", "message": "deleted"})
+        .catchError((error) {
       return {"code": "success", "message": "$error"};
     });
   }
@@ -131,13 +148,20 @@ class Post {
     if (profileController.profile != null && canRate) {
       print("I am inside rate");
       ratings = ratings ?? [];
-      var rating = Rating(uid: profileController.profile!.uid!, name: profileController.profile!.name, stars: stars);
+      var rating = Rating(
+          uid: profileController.profile!.uid!,
+          name: profileController.profile!.name,
+          stars: stars);
       ratings!.add(rating);
       await posts.doc(id.toString()).update({
         "totalRating": FieldValue.increment(stars),
         "totalRaters": FieldValue.increment(1),
       }).then((value) {
-        return posts.doc(id.toString()).collection("ratings").add(rating.toJson()).then((value) => {"code": "Failed", "message": "Added"});
+        return posts
+            .doc(id.toString())
+            .collection("ratings")
+            .add(rating.toJson())
+            .then((value) => {"code": "Failed", "message": "Added"});
       }).catchError((error) {
         // print(error.toString());
         return {"code": "Failed", "message": error.toString()};
@@ -149,7 +173,9 @@ class Post {
     bool result = true;
 
     if ((ratings ?? []).isNotEmpty) {
-      List<dynamic> temp = ratings!.where((element) => element.uid == profileController.profile!.uid).toList();
+      List<dynamic> temp = ratings!
+          .where((element) => element.uid == profileController.profile!.uid)
+          .toList();
       result = temp.isEmpty;
     }
 
