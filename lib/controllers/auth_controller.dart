@@ -9,6 +9,8 @@ class AuthController extends GetxController {
   var auth = Auth();
 }
 
+
+
 class ProfileController extends GetxController {
   static ProfileController instance = Get.find();
   Profile? profile;

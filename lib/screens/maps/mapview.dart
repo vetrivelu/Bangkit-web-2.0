@@ -30,10 +30,14 @@ class _AreaViewState extends State<AreaView> {
       // props.add(Props(key: TextEditingController(), value: TextEditingController()));
     } else {
       for (var key in widget.area!.property.keys) {
-        props.add(Props(key: TextEditingController(text: key), value: TextEditingController(text: widget.area!.property[key].toString())));
+        props.add(Props(
+            key: TextEditingController(text: key),
+            value: TextEditingController(
+                text: widget.area!.property[key].toString())));
       }
 
-      widget.coordinates = LatLng(widget.area!.coordinates.latitude, widget.area!.coordinates.longitude);
+      widget.coordinates = LatLng(widget.area!.coordinates.latitude,
+          widget.area!.coordinates.longitude);
       _selectedType = widget.area!.type;
     }
 
@@ -56,7 +60,9 @@ class _AreaViewState extends State<AreaView> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: SizedBox(height: getHeight(context) * 0.15, child: Image.asset('assets/bina.png')),
+          title: SizedBox(
+              height: getHeight(context) * 0.15,
+              child: Image.asset('assets/bina.png')),
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -74,7 +80,8 @@ class _AreaViewState extends State<AreaView> {
                     future: Area(
                             location: location.text,
                             property: Props.convertPropsToJson(props),
-                            coordinates: GeoPoint(double.parse(latitude.text), double.parse(longitude.text)),
+                            coordinates: GeoPoint(double.parse(latitude.text),
+                                double.parse(longitude.text)),
                             type: _selectedType)
                         .add(),
                     onTapOk: () {
@@ -84,12 +91,14 @@ class _AreaViewState extends State<AreaView> {
             },
             child: const Text("Submit")),
         body: FutureBuilder<Result?>(
-            future: Area.getAddress(widget.coordinates!.latitude, widget.coordinates!.longitude),
+            future: Area.getAddress(
+                widget.coordinates!.latitude, widget.coordinates!.longitude),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               }
-              if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.connectionState == ConnectionState.active ||
+                  snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
                   Result result = snapshot.data as Result;
                   location.text = result.formattedAddress;
@@ -105,52 +114,73 @@ class _AreaViewState extends State<AreaView> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Text("Location", style: Theme.of(context).textTheme.headline3),
-                          Table(children: [
-                            TableRow(children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: CustomDropDown(
-                                  selectedValue: _selectedType,
-                                  onChanged: (type) {
-                                    setState(() {
-                                      _selectedType = type as AreaType;
-                                      props.clear();
-                                      props.add(Props.getProps(key: "Name", value: ""));
-                                      if (_selectedType == AreaType.floodProne) {
-                                        props.add(Props.getProps(key: "Max Flood Level", value: ""));
-                                      }
-                                    });
-                                  },
-                                  items: AreaType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.toString()))).toList(),
-                                  labelText: 'Type',
-                                  hintText: '',
-                                ),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: CustomTextFormField(controller: location, labelText: "Location"),
-                              ),
-                            ]),
-                          ]),
+                          Text("Location",
+                              style: Theme.of(context).textTheme.headline3),
                           Table(
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.bottom,
+                              children: [
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: CustomDropDown(
+                                      selectedValue: _selectedType,
+                                      onChanged: (type) {
+                                        setState(() {
+                                          _selectedType = type as AreaType;
+                                          props.clear();
+                                          props.add(Props.getProps(
+                                              key: "Name", value: ""));
+                                          if (_selectedType ==
+                                              AreaType.floodProne) {
+                                            props.add(Props.getProps(
+                                                key: "Max Flood Level",
+                                                value: ""));
+                                          }
+                                        });
+                                      },
+                                      items: AreaType.values
+                                          .map((e) => DropdownMenuItem(
+                                              value: e,
+                                              child: Text(e.toString())))
+                                          .toList(),
+                                      labelText: 'Type',
+                                      hintText: '',
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: CustomTextFormField(
+                                        controller: location,
+                                        labelText: "Location"),
+                                  ),
+                                ]),
+                              ]),
+                          Table(
+                            defaultVerticalAlignment:
+                                TableCellVerticalAlignment.bottom,
                             children: [
                               TableRow(children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: CustomTextFormField(controller: latitude, labelText: "Latitude"),
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: CustomTextFormField(
+                                      controller: latitude,
+                                      labelText: "Latitude"),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: CustomTextFormField(controller: longitude, labelText: "Longitude"),
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: CustomTextFormField(
+                                      controller: longitude,
+                                      labelText: "Longitude"),
                                 ),
                               ]),
                             ],
                           ),
                           Table(
-                              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.bottom,
                               children: props
                                   .map((e) => TableRow(children: [
                                         // Padding(
@@ -161,30 +191,58 @@ class _AreaViewState extends State<AreaView> {
                                         //   ),
                                         // ),
                                         Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: TypeAheadFormField(
-                                            textFieldConfiguration: TextFieldConfiguration(controller: e.key, decoration: inputDecoration),
-                                            onSuggestionSelected: (suggestion) {
-                                              e.key.text = suggestion.toString();
-                                            },
-                                            itemBuilder: (context, suggestion) {
-                                              return ListTile(
-                                                title: Text(suggestion.toString()),
-                                              );
-                                            },
-                                            suggestionsCallback: suggestionsCallback,
+                                          padding:
+                                              const EdgeInsets.only(bottom: 16),
+                                          child: ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                                minHeight: 60,
+                                                maxWidth:
+                                                    getWidth(context) / 4),
+                                            child: ListTile(
+                                              title: const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 8),
+                                                child: Text("Key"),
+                                              ),
+                                              subtitle: TypeAheadFormField(
+                                                textFieldConfiguration:
+                                                    TextFieldConfiguration(
+                                                        controller: e.key,
+                                                        decoration:
+                                                            inputDecoration),
+                                                onSuggestionSelected:
+                                                    (suggestion) {
+                                                  e.key.text =
+                                                      suggestion.toString();
+                                                },
+                                                itemBuilder:
+                                                    (context, suggestion) {
+                                                  return ListTile(
+                                                    title: Text(
+                                                        suggestion.toString()),
+                                                  );
+                                                },
+                                                suggestionsCallback:
+                                                    suggestionsCallback,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: CustomTextFormField(controller: e.value, labelText: "Value"),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 16),
+                                          child: CustomTextFormField(
+                                              controller: e.value,
+                                              labelText: "Value"),
                                         )
                                       ]))
                                   .toList()),
                           ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  props.add(Props(key: TextEditingController(), value: TextEditingController()));
+                                  props.add(Props(
+                                      key: TextEditingController(),
+                                      value: TextEditingController()));
                                 });
                               },
                               child: const Text("+")),
@@ -202,7 +260,14 @@ class _AreaViewState extends State<AreaView> {
   }
 
   FutureOr<Iterable> suggestionsCallback(String pattern) {
-    var wordsList = ["Name", "Depth", "Max Rain", "MAx Flood Level", "Description", "Street Name"];
+    var wordsList = [
+      "Name",
+      "Depth",
+      "Max Rain",
+      "MAx Flood Level",
+      "Description",
+      "Street Name"
+    ];
     if (pattern.isEmpty) {
       return wordsList;
     }
@@ -219,7 +284,9 @@ class Props {
   String get valueText => value.text;
 
   static getProps({required String key, required String value}) {
-    return Props(key: TextEditingController(text: key), value: TextEditingController(text: value));
+    return Props(
+        key: TextEditingController(text: key),
+        value: TextEditingController(text: value));
   }
 
   static convertPropsToJson(List<Props> props) {

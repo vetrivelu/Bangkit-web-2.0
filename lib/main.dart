@@ -1,10 +1,14 @@
+import 'package:bangkit/controllers/layoutcontroller.dart';
 import 'package:bangkit/models/ngo.dart';
 import 'package:bangkit/routers/bottom_route.dart';
 import 'package:bangkit/routers/landing_page.dart';
+import 'package:bangkit/screens/mainscreen.dart';
 
 import 'package:bangkit/web/ngo_form.dart';
 import 'package:bangkit/web/post_form.dart';
 import 'package:bangkit/web/web_home.dart';
+import 'package:bangkit/widgets/customdrawer.dart';
+import 'package:bangkit/widgets/mainlayout.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -30,6 +34,7 @@ Future<void> main() async {
   Get.put(ServiceListController());
   Get.put(DamLinkController());
   Get.put(MapIconsController());
+  Get.put(LayoutController());
 
   await markerController.loadIcons();
   await MapIconsController.loadMarkerInfo();
@@ -87,7 +92,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor:
                     MaterialStateProperty.all(const Color(0xFF00b3df)))),
       ),
-      home: const LandingPage(),
+      home:  MainLayout(),
     );
   }
 }
