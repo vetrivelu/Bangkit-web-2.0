@@ -1,7 +1,7 @@
 bangkit
 2.12
-file:///C:/Users/rampo/Desktop/flutter/Bangkit-Web/Bangkit-web-2.0/
-file:///C:/Users/rampo/Desktop/flutter/Bangkit-Web/Bangkit-web-2.0/lib/
+file:///C:/Work/Bina%20Bersama/Bangkit-web-2.0/
+file:///C:/Work/Bina%20Bersama/Bangkit-web-2.0/lib/
 archive
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/archive-3.1.8/
@@ -58,6 +58,10 @@ cloud_functions_web
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions_web-4.2.5/
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions_web-4.2.5/lib/
+collapsible_sidebar
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/collapsible_sidebar-2.0.1+2/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/collapsible_sidebar-2.0.1+2/lib/
 collection
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0/

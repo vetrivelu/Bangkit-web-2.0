@@ -66,12 +66,12 @@ class _EditProfileState extends State<EditProfile> {
     primaryState = widget.profile.primaryAddress.state;
     primaryPostCode = widget.profile.primaryAddress.pincode;
 
-    doorColorSecondary = widget.profile.secondaryAddress.doorColor;
-    roofColorSecondary = widget.profile.secondaryAddress.roofColor;
-    secondaryState = widget.profile.secondaryAddress.state;
-    doorColorSecondary = widget.profile.secondaryAddress.doorColor;
+    // doorColorSecondary = widget.profile.secondaryAddress.doorColor;
+    // roofColorSecondary = widget.profile.secondaryAddress.roofColor;
+    // secondaryState = widget.profile.secondaryAddress.state;
+    // doorColorSecondary = widget.profile.secondaryAddress.doorColor;
 
-    secondaryPostCode = widget.profile.secondaryAddress.pincode;
+    // secondaryPostCode = widget.profile.secondaryAddress.pincode;
 
     nameController.text = widget.profile.name;
     phoneController.text = widget.profile.phone;
@@ -114,7 +114,7 @@ class _EditProfileState extends State<EditProfile> {
       secondaryPhone: secondaryaddressController.text,
       email: emailController.text,
       primaryAddress: primaryAddress,
-      secondaryAddress: secondaryAddress,
+      // secondaryAddress: secondaryAddress,
       icNumber: icnumberController.text,
       documents: widget.profile.documents,
       services: widget.profile.services,

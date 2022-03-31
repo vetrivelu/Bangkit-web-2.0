@@ -1,16 +1,11 @@
 import 'package:bangkit/controllers/layoutcontroller.dart';
-import 'package:bangkit/models/ngo.dart';
 import 'package:bangkit/screens/adun_list.dart';
 import 'package:bangkit/screens/aid%20&grants/aidpost.dart';
-import 'package:bangkit/screens/home.dart';
 import 'package:bangkit/screens/maps/location_list.dart';
 import 'package:bangkit/screens/repo_list.dart';
 import 'package:bangkit/screens/volunteer_list.dart';
 import 'package:bangkit/services/firebase.dart';
-import 'package:bangkit/web/ngo_form.dart';
-import 'package:bangkit/widgets/customdrawer.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math show pi;
 
@@ -36,12 +31,8 @@ class _MainLayoutState extends State<MainLayout> {
 
   final pages = [
     // HomePage(),
-    NgoList(
-        query: ngos.where("entityType", isEqualTo: 1),
-        entityType: 'NGO DATABASE'),
-    NgoList(
-        query: ngos.where("entityType", isEqualTo: 0),
-        entityType: 'GOVERNMENT AGENCIES'),
+    NgoList(query: ngos.where("entityType", isEqualTo: 1), entityType: 'NGO DATABASE'),
+    NgoList(query: ngos.where("entityType", isEqualTo: 0), entityType: 'GOVERNMENT AGENCIES'),
     AdunList(),
     const VolunteerList(),
     const AidAndGrants(),
@@ -57,7 +48,7 @@ class _MainLayoutState extends State<MainLayout> {
   List<CollapsibleItem> get _generateItems {
     return [
       CollapsibleItem(
-        text: 'Dashboard',
+        text: 'NGO DATABASE',
         icon: Icons.assessment,
         onPressed: () {
           setState(() {
@@ -68,7 +59,7 @@ class _MainLayoutState extends State<MainLayout> {
         isSelected: true,
       ),
       CollapsibleItem(
-          text: 'Ice-Cream',
+          text: 'GOVERNMENT AGENCIES',
           icon: Icons.icecream,
           onPressed: () {
             setState(() {
@@ -77,7 +68,7 @@ class _MainLayoutState extends State<MainLayout> {
             });
           }),
       CollapsibleItem(
-          text: 'Search',
+          text: 'ADUN LIST',
           icon: Icons.search,
           onPressed: () {
             setState(() {
@@ -86,7 +77,7 @@ class _MainLayoutState extends State<MainLayout> {
             });
           }),
       CollapsibleItem(
-          text: 'Notifications',
+          text: 'VOLUNTEER LIST',
           icon: Icons.notifications,
           onPressed: () {
             setState(() {
@@ -95,7 +86,7 @@ class _MainLayoutState extends State<MainLayout> {
             });
           }),
       CollapsibleItem(
-        text: 'Settings',
+        text: 'AID & GRANTS',
         icon: Icons.settings,
         onPressed: () {
           setState(() {
@@ -105,7 +96,7 @@ class _MainLayoutState extends State<MainLayout> {
         },
       ),
       CollapsibleItem(
-        text: 'Home',
+        text: 'MAP LOCATIONS',
         icon: Icons.home,
         onPressed: () {
           setState(() {
@@ -114,36 +105,6 @@ class _MainLayoutState extends State<MainLayout> {
           });
         },
       ),
-      // CollapsibleItem(
-      //   text: 'Alarm',
-      //   icon: Icons.access_alarm,
-      //   onPressed: () {
-      //     setState(() {
-      //       layoutController.pageIndex = 6;
-      //       layoutController.controller.jumpToPage(6);
-      //     });
-      //   },
-      // ),
-      // CollapsibleItem(
-      //   text: 'Eco',
-      //   icon: Icons.eco,
-      //   onPressed: () {
-      //     setState(() {
-      //       layoutController.pageIndex = 7;
-      //       layoutController.controller.jumpToPage(7);
-      //     });
-      //   },
-      // ),
-      // CollapsibleItem(
-      //   text: 'Event',
-      //   icon: Icons.event,
-      //   onPressed: () {
-      //     setState(() {
-      //       layoutController.pageIndex = 8;
-      //       layoutController.controller.jumpToPage(8);
-      //     });
-      //   },
-      // ),
     ];
   }
 
@@ -163,25 +124,20 @@ class _MainLayoutState extends State<MainLayout> {
                     isCollapsed = !isCollapsed;
                   });
                 },
+
                 // isCollapsed: isCollapsed,
                 items: _items,
                 avatarImg: _avatarImg,
                 title: 'John Smith',
                 onTitleTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Yay! Flutter Collapsible Sidebar!')));
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Yay! Flutter Collapsible Sidebar!')));
                 },
                 body: const Text(''),
                 backgroundColor: Colors.white,
                 selectedTextColor: Colors.white,
-                textStyle:
-                    const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
-                titleStyle: const TextStyle(
-                    fontSize: 20,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold),
-                toggleTitleStyle:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textStyle: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
+                titleStyle: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+                toggleTitleStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
 
                 sidebarBoxShadow: const [
                   BoxShadow(

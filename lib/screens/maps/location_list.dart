@@ -61,6 +61,7 @@ class _LocationListState extends State<LocationList> {
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
+                        print("Hello");
                         areas[index].delete();
                       },
                     ),

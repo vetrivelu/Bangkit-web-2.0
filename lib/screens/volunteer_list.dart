@@ -258,24 +258,24 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
             ],
             mainAxisSize: MainAxisSize.max,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.location_on, color: Colors.red),
-              ),
-              Flexible(
-                child: Text(
-                  "${widget.profile.secondaryAddress.fullAddress}",
-                  maxLines: 3,
-                  softWrap: true,
-                  style: const TextStyle(overflow: TextOverflow.clip),
-                ),
-              )
-            ],
-            mainAxisSize: MainAxisSize.max,
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.start,
+          //   children: [
+          //     const Padding(
+          //       padding: EdgeInsets.all(8),
+          //       child: Icon(Icons.location_on, color: Colors.red),
+          //     ),
+          //     Flexible(
+          //       child: Text(
+          //         // "${widget.profile.secondaryAddress.fullAddress}",
+          //         maxLines: 3,
+          //         softWrap: true,
+          //         style: const TextStyle(overflow: TextOverflow.clip),
+          //       ),
+          //     )
+          //   ],
+          //   mainAxisSize: MainAxisSize.max,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

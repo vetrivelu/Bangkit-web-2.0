@@ -26,9 +26,7 @@ class _AidAndGrantsState extends State<AidAndGrants> {
         ),
         appBar: AppBar(
           centerTitle: true,
-          title: SizedBox(
-              height: getHeight(context) * 0.15,
-              child: Image.asset('assets/bina.png')),
+          title: SizedBox(height: getHeight(context) * 0.15, child: Image.asset('assets/bina.png')),
           // bottom: PreferredSize(child: child, preferredSize: preferredSize),
         ),
         body: SafeArea(
@@ -41,16 +39,12 @@ class _AidAndGrantsState extends State<AidAndGrants> {
               child: Container(
                 decoration: const BoxDecoration(),
                 child: Container(
-                  decoration:
-                      BoxDecoration(color: Colors.white.withOpacity(0.8)),
+                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.8)),
                   child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                    stream:
-                        posts.orderBy("created", descending: true).snapshots(),
+                    stream: posts.orderBy("created", descending: true).snapshots(),
                     builder: (BuildContext context, snapshot) {
                       if (snapshot.hasData) {
-                        List<Post> tempPosts = snapshot.data!.docs
-                            .map((e) => Post.fromJson(e.data()))
-                            .toList();
+                        List<Post> tempPosts = snapshot.data!.docs.map((e) => Post.fromJson(e.data())).toList();
                         return Column(
                           children: tempPosts.map((e) {
                             return PostTile(post: e);
@@ -84,8 +78,7 @@ class _PostTileState extends State<PostTile> {
       return 0.0;
     }
     print("==============>     ${widget.post.totalRating}");
-    return (widget.post.totalRating * 1.0) /
-        (widget.post.totalRaters * 1.0).toDouble();
+    return (widget.post.totalRating * 1.0) / (widget.post.totalRaters * 1.0).toDouble();
   }
 
   @override
@@ -131,10 +124,7 @@ class _PostTileState extends State<PostTile> {
                     trailing: FutureBuilder<dynamic>(
                         future: widget.post.loadRatings(),
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                                  ConnectionState.active ||
-                              snapshot.connectionState ==
-                                  ConnectionState.done) {
+                          if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
                             return RatingBarIndicator(
                               rating: averageRating,
                               itemBuilder: (context, index) => const Icon(
@@ -160,7 +150,7 @@ class _PostTileState extends State<PostTile> {
                           );
                         }),
                   ),
-                  Image.network(widget.post.media![0]),
+                  (widget.post.media ?? []).isNotEmpty ? Image.network(widget.post.media![0]) : Container(),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(

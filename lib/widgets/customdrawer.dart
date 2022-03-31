@@ -3,8 +3,6 @@ import 'dart:math' as math show pi;
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 
-
-
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,8 +24,7 @@ class SidebarPage extends StatefulWidget {
 class _SidebarPageState extends State<SidebarPage> {
   late List<CollapsibleItem> _items;
   late String _headline;
-  AssetImage _avatarImg =
-  AssetImage('assets/man.png');
+  AssetImage _avatarImg = AssetImage('assets/man.png');
 
   @override
   void initState() {
@@ -39,60 +36,35 @@ class _SidebarPageState extends State<SidebarPage> {
   List<CollapsibleItem> get _generateItems {
     return [
       CollapsibleItem(
-        text: 'Dashboard',
+        text: 'NGO DATABASE',
         icon: Icons.assessment,
-        onPressed: () => setState(() => _headline = 'DashBoard'),
+        onPressed: () => setState(() => _headline = 'NGO DATABASE'),
         isSelected: true,
       ),
       CollapsibleItem(
-        text: 'Ice-Cream',
+        text: 'GOVERNMENT AGENCY',
         icon: Icons.icecream,
-        onPressed: () => setState(() => _headline = 'Errors'),
+        onPressed: () => setState(() => _headline = 'GOVERNMENT AGENCY'),
       ),
       CollapsibleItem(
-        text: 'Search',
+        text: 'ADUN LIST',
         icon: Icons.search,
-        onPressed: () => setState(() => _headline = 'Search'),
+        onPressed: () => setState(() => _headline = 'ADUN LIST'),
       ),
       CollapsibleItem(
-        text: 'Notifications',
+        text: 'VOLUNTEER LIST',
         icon: Icons.notifications,
-        onPressed: () => setState(() => _headline = 'Notifications'),
+        onPressed: () => setState(() => _headline = 'VOLUNTEER LIST'),
       ),
       CollapsibleItem(
-        text: 'Settings',
+        text: 'AID & GRANT',
         icon: Icons.settings,
-        onPressed: () => setState(() => _headline = 'Settings'),
+        onPressed: () => setState(() => _headline = 'AID & GRANT'),
       ),
       CollapsibleItem(
-        text: 'Home',
+        text: 'MAP ',
         icon: Icons.home,
-        onPressed: () => setState(() => _headline = 'Home'),
-      ),
-      CollapsibleItem(
-        text: 'Alarm',
-        icon: Icons.access_alarm,
-        onPressed: () => setState(() => _headline = 'Alarm'),
-      ),
-      CollapsibleItem(
-        text: 'Eco',
-        icon: Icons.eco,
-        onPressed: () => setState(() => _headline = 'Eco'),
-      ),
-      CollapsibleItem(
-        text: 'Event',
-        icon: Icons.event,
-        onPressed: () => setState(() => _headline = 'Event'),
-      ),
-      CollapsibleItem(
-        text: 'Email',
-        icon: Icons.email,
-        onPressed: () => setState(() => _headline = 'Email'),
-      ),
-      CollapsibleItem(
-        text: 'Face',
-        icon: Icons.face,
-        onPressed: () => setState(() => _headline = 'Face'),
+        onPressed: () => setState(() => _headline = 'MAP'),
       ),
     ];
   }
@@ -107,17 +79,13 @@ class _SidebarPageState extends State<SidebarPage> {
         avatarImg: _avatarImg,
         title: 'John Smith',
         onTitleTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Yay! Flutter Collapsible Sidebar!')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Yay! Flutter Collapsible Sidebar!')));
         },
         body: _body(size, context),
         backgroundColor: Colors.black,
         selectedTextColor: Colors.limeAccent,
         textStyle: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
-        titleStyle: TextStyle(
-            fontSize: 20,
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.bold),
+        titleStyle: TextStyle(fontSize: 20, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
         toggleTitleStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         sidebarBoxShadow: [
           BoxShadow(

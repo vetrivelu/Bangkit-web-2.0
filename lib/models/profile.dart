@@ -22,7 +22,7 @@ class Profile {
       required this.secondaryPhone,
       required this.email,
       required this.primaryAddress,
-      required this.secondaryAddress,
+      // required this.secondaryAddress,
       this.isVolunteer = false,
       this.isApproved = false,
       this.about = '',
@@ -41,7 +41,7 @@ class Profile {
   bool isVolunteer;
   bool isApproved;
   Address primaryAddress;
-  Address secondaryAddress;
+  // Address secondaryAddress;
   List<dynamic> documents;
   String? about;
   List<dynamic> services;
@@ -65,7 +65,7 @@ class Profile {
         primaryAddress: Address.fromJson(json["primaryAddress"]),
         isVolunteer: json["isVolunteer"] ?? false,
         isApproved: json["isApproved"] ?? false,
-        secondaryAddress: Address.fromJson(json["secondaryAddress"]),
+        // secondaryAddress: Address.fromJson(json["secondaryAddress"]),
         about: json["about"] ?? '',
         icNumber: json["icNumber"] ?? '',
         documents: json["documents"] ?? emptyString,
@@ -83,15 +83,15 @@ class Profile {
         "isApproved": isApproved,
         "email": email,
         "primaryAddress": primaryAddress.toJson(),
-        "secondaryAddress": secondaryAddress.toJson(),
+        // "secondaryAddress": secondaryAddress.toJson(),
         "about": about ?? '',
         "documents": documents,
         "services": services,
         "searchService": searchService,
         primaryAddress.state: true,
-        secondaryAddress.state: true,
+        // secondaryAddress.state: true,
         primaryAddress.pincode: true,
-        secondaryAddress.pincode: true,
+        // secondaryAddress.pincode: true,
       };
 
   Future<Response> addUser(String uid) async {

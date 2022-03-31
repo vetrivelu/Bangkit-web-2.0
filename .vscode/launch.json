@@ -4,12 +4,23 @@
             "name": "Flutter",
             "type": "dart",
             "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--web-renderer html"
+            ],
+            "flutterMode": "release"
+        },
+        {
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
             "program": "lib/main.dart"
         },
         {
             "name": "FlutterPlay",
             "program": "lib/main.dart",
             "request": "launch",
+            "type": "dart"
         }
     ]
 }

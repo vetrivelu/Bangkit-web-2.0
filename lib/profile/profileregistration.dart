@@ -109,7 +109,7 @@ class _RegistrationState extends State<Registration> {
         secondaryPhone: secondaryaddressController.text,
         email: emailController.text,
         primaryAddress: primaryAddress,
-        secondaryAddress: secondaryAddress,
+        // secondaryAddress: secondaryAddress,
         icNumber: icnumberController.text,
         documents: [],
         services: [],
@@ -358,145 +358,145 @@ class _RegistrationState extends State<Registration> {
                   setState(() => _customTileExpanded = expanded);
                 },
               ),
-              ExpansionTile(
-                leading: const Icon(Icons.home),
-                title: const Text('Secondary House address'),
-                trailing: Icon(
-                  _customTileExpanded ? Icons.arrow_drop_down_circle : Icons.arrow_drop_down,
-                ),
-                children: [
-                  const Divider(),
-                  const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Align(
-                      child: Text('Secondary House Address'),
-                      alignment: Alignment.centerLeft,
-                    ),
-                  ),
-                  CustomTextFormfieldRed(
-                    controller: secondaryAddressLine1,
-                    hintText: '123 Street',
-                    labelText: 'Address line 1',
-                    icon: const Icon(FontAwesomeIcons.home),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      value = value ?? '';
-                      var s = value.isEmpty ? "ICNumber is required field" : null;
-                      return s;
-                    },
-                  ),
-                  CustomTextFormfieldRed(
-                    controller: secondaryAdressLIne2,
-                    hintText: '123 Street',
-                    labelText: 'Address line 2',
-                    icon: const Icon(FontAwesomeIcons.home),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: CustomDropDownButtonformField(
-                      labelText: 'Choose State',
-                      Icon: const Icon(FontAwesomeIcons.hotel),
-                      value: secondaryState,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          secondaryState = newValue!;
-                          setSecondaryPostalCodes();
-                        });
-                      },
-                      item: states.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: CustomDropDownButtonformField(
-                      labelText: 'Choose PinCode',
-                      Icon: const Icon(FontAwesomeIcons.hotel),
-                      value: secondaryPostCode,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          secondaryPostCode = newValue!;
-                        });
-                      },
-                      item: secondaryCodeList.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  CustomTextFormfieldRed(
-                    validator: (value) {
-                      value = value ?? '';
-                      if (value.isEmpty) {
-                        return "Description is a required field";
-                      }
-                    },
-                    maxLines: 4,
-                    controller: descriptionController2,
-                    hintText: 'Type Your Text Here',
-                    labelText: 'Description',
-                    icon: const Icon(Icons.list),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: CustomDropDownButtonformField(
-                      labelText: 'DoorColor',
-                      Icon: const Icon(Icons.door_back_door),
-                      value: doorColorSecondary,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          doorColorSecondary = newValue!;
-                        });
-                      },
-                      item: colors.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(value),
-                              const SizedBox(width: 15),
-                              Container(height: 10, width: 10, color: Colors.primaries.elementAt(colors.indexWhere((element) => element == value))),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: CustomDropDownButtonformField(
-                      labelText: 'Roof Color',
-                      Icon: const Icon(Icons.roofing),
-                      value: roofColorSecondary,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          roofColorSecondary = newValue!;
-                        });
-                      },
-                      item: colors.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(value),
-                              const SizedBox(width: 15),
-                              Container(height: 10, width: 10, color: Colors.primaries.elementAt(colors.indexWhere((element) => element == value))),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
+              // ExpansionTile(
+              //   leading: const Icon(Icons.home),
+              //   title: const Text('Secondary House address'),
+              //   trailing: Icon(
+              //     _customTileExpanded ? Icons.arrow_drop_down_circle : Icons.arrow_drop_down,
+              //   ),
+              //   children: [
+              //     const Divider(),
+              //     const Padding(
+              //       padding: EdgeInsets.all(16),
+              //       child: Align(
+              //         child: Text('Secondary House Address'),
+              //         alignment: Alignment.centerLeft,
+              //       ),
+              //     ),
+              //     CustomTextFormfieldRed(
+              //       controller: secondaryAddressLine1,
+              //       hintText: '123 Street',
+              //       labelText: 'Address line 1',
+              //       icon: const Icon(FontAwesomeIcons.home),
+              //       keyboardType: TextInputType.emailAddress,
+              //       validator: (value) {
+              //         value = value ?? '';
+              //         var s = value.isEmpty ? "ICNumber is required field" : null;
+              //         return s;
+              //       },
+              //     ),
+              //     CustomTextFormfieldRed(
+              //       controller: secondaryAdressLIne2,
+              //       hintText: '123 Street',
+              //       labelText: 'Address line 2',
+              //       icon: const Icon(FontAwesomeIcons.home),
+              //     ),
+              //     SizedBox(
+              //       height: MediaQuery.of(context).size.height * 0.1,
+              //       child: CustomDropDownButtonformField(
+              //         labelText: 'Choose State',
+              //         Icon: const Icon(FontAwesomeIcons.hotel),
+              //         value: secondaryState,
+              //         onChanged: (String? newValue) {
+              //           setState(() {
+              //             secondaryState = newValue!;
+              //             setSecondaryPostalCodes();
+              //           });
+              //         },
+              //         item: states.map<DropdownMenuItem<String>>((String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Text(value),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       height: MediaQuery.of(context).size.height * 0.1,
+              //       child: CustomDropDownButtonformField(
+              //         labelText: 'Choose PinCode',
+              //         Icon: const Icon(FontAwesomeIcons.hotel),
+              //         value: secondaryPostCode,
+              //         onChanged: (String? newValue) {
+              //           setState(() {
+              //             secondaryPostCode = newValue!;
+              //           });
+              //         },
+              //         item: secondaryCodeList.map<DropdownMenuItem<String>>((String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Text(value),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ),
+              //     CustomTextFormfieldRed(
+              //       validator: (value) {
+              //         value = value ?? '';
+              //         if (value.isEmpty) {
+              //           return "Description is a required field";
+              //         }
+              //       },
+              //       maxLines: 4,
+              //       controller: descriptionController2,
+              //       hintText: 'Type Your Text Here',
+              //       labelText: 'Description',
+              //       icon: const Icon(Icons.list),
+              //     ),
+              //     SizedBox(
+              //       height: MediaQuery.of(context).size.height * 0.1,
+              //       child: CustomDropDownButtonformField(
+              //         labelText: 'DoorColor',
+              //         Icon: const Icon(Icons.door_back_door),
+              //         value: doorColorSecondary,
+              //         onChanged: (String? newValue) {
+              //           setState(() {
+              //             doorColorSecondary = newValue!;
+              //           });
+              //         },
+              //         item: colors.map<DropdownMenuItem<String>>((String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Row(
+              //               crossAxisAlignment: CrossAxisAlignment.center,
+              //               children: [
+              //                 Text(value),
+              //                 const SizedBox(width: 15),
+              //                 Container(height: 10, width: 10, color: Colors.primaries.elementAt(colors.indexWhere((element) => element == value))),
+              //               ],
+              //             ),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       height: MediaQuery.of(context).size.height * 0.1,
+              //       child: CustomDropDownButtonformField(
+              //         labelText: 'Roof Color',
+              //         Icon: const Icon(Icons.roofing),
+              //         value: roofColorSecondary,
+              //         onChanged: (String? newValue) {
+              //           setState(() {
+              //             roofColorSecondary = newValue!;
+              //           });
+              //         },
+              //         item: colors.map<DropdownMenuItem<String>>((String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Row(
+              //               crossAxisAlignment: CrossAxisAlignment.center,
+              //               children: [
+              //                 Text(value),
+              //                 const SizedBox(width: 15),
+              //                 Container(height: 10, width: 10, color: Colors.primaries.elementAt(colors.indexWhere((element) => element == value))),
+              //               ],
+              //             ),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: ElevatedButton(
