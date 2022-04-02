@@ -107,6 +107,8 @@ class _PostTileState extends State<PostTile> {
                           IconButton(
                             icon: const Icon(Icons.edit),
                             onPressed: () {
+
+
                               Get.to(() => PostForm(post: widget.post));
                             },
                           ),
