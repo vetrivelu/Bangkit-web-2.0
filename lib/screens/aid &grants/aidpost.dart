@@ -69,6 +69,8 @@ class PostTile extends StatefulWidget {
   PostTile({Key? key, required this.post}) : super(key: key);
   final Post post;
   @override
+
+
   _PostTileState createState() => _PostTileState();
 }
 
