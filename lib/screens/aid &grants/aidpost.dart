@@ -75,6 +75,7 @@ class PostTile extends StatefulWidget {
 class _PostTileState extends State<PostTile> {
   get averageRating {
     if (widget.post.totalRaters == 0) {
+
       return 0.0;
     }
     print("==============>     ${widget.post.totalRating}");
