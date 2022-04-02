@@ -195,16 +195,30 @@ class _NgoListState extends State<NgoList> {
                     );
                   }
                   print(streamSnapshot.hasData);
-                  return ListView(
-                    padding: const EdgeInsets.all(8),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: streamSnapshot.data!.docs.map((snapshot) {
-                      var data = snapshot.data()! as Map<String, dynamic>;
-                      // print("I am data $data");
-                      // Ngo.fromJson(data).update();
-                      return CustomExpansionTile(ngo: Ngo.fromJson(data));
-                    }).toList(),
+                  return SizedBox(
+                    height: getHeight(context)*0.85,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView(
+                            padding: const EdgeInsets.all(8),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            children: streamSnapshot.data!.docs.map((snapshot) {
+                              var data = snapshot.data()! as Map<String, dynamic>;
+                              // print("I am data $data");
+                              // Ngo.fromJson(data).update();
+                              return CustomExpansionTile(ngo: Ngo.fromJson(data));
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
                   );
                 } else {
                   return Container();
@@ -212,6 +226,9 @@ class _NgoListState extends State<NgoList> {
               },
             ),
           ),
+          SizedBox(
+            height: getHeight(context)*0.08,
+          )
         ],
       ),
 

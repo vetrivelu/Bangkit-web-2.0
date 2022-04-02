@@ -9,6 +9,8 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math show pi;
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class MainLayout extends StatefulWidget {
   @override
   _MainLayoutState createState() => _MainLayoutState();
@@ -17,10 +19,10 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   late List<CollapsibleItem> _items;
   late String _headline;
-  AssetImage _avatarImg = const AssetImage('assets/man.png');
+  AssetImage _avatarImg = const AssetImage('assets/appstore.png');
   int _selectedIndex = 0;
 
-  bool isCollapsed = false;
+  bool isCollapsed = true;
 
   @override
   void initState() {
@@ -44,12 +46,14 @@ class _MainLayoutState extends State<MainLayout> {
       _selectedIndex = index;
     });
   }
+  final IconData  = ImageIcon(AssetImage('assets/aid.png'));
+
 
   List<CollapsibleItem> get _generateItems {
     return [
       CollapsibleItem(
         text: 'NGO DATABASE',
-        icon: Icons.assessment,
+        icon:FontAwesomeIcons.handHoldingHeart,
         onPressed: () {
           setState(() {
             layoutController.pageIndex = 0;
@@ -60,7 +64,7 @@ class _MainLayoutState extends State<MainLayout> {
       ),
       CollapsibleItem(
           text: 'GOVERNMENT AGENCIES',
-          icon: Icons.icecream,
+          icon:FontAwesomeIcons.building,
           onPressed: () {
             setState(() {
               layoutController.pageIndex = 1;
@@ -69,7 +73,7 @@ class _MainLayoutState extends State<MainLayout> {
           }),
       CollapsibleItem(
           text: 'ADUN LIST',
-          icon: Icons.search,
+          icon: FontAwesomeIcons.male,
           onPressed: () {
             setState(() {
               layoutController.pageIndex = 2;
@@ -78,7 +82,7 @@ class _MainLayoutState extends State<MainLayout> {
           }),
       CollapsibleItem(
           text: 'VOLUNTEER LIST',
-          icon: Icons.notifications,
+          icon: FontAwesomeIcons.users,
           onPressed: () {
             setState(() {
               layoutController.pageIndex = 3;
@@ -87,7 +91,7 @@ class _MainLayoutState extends State<MainLayout> {
           }),
       CollapsibleItem(
         text: 'AID & GRANTS',
-        icon: Icons.settings,
+        icon: FontAwesomeIcons.handsHelping,
         onPressed: () {
           setState(() {
             layoutController.pageIndex = 4;
@@ -97,7 +101,7 @@ class _MainLayoutState extends State<MainLayout> {
       ),
       CollapsibleItem(
         text: 'MAP LOCATIONS',
-        icon: Icons.home,
+        icon: FontAwesomeIcons.map,
         onPressed: () {
           setState(() {
             layoutController.pageIndex = 5;
@@ -119,6 +123,7 @@ class _MainLayoutState extends State<MainLayout> {
               width: isCollapsed ? 270 : 80,
               duration: const Duration(milliseconds: 300),
               child: CollapsibleSidebar(
+                isCollapsed: !isCollapsed,
                 onToggleTap: () {
                   setState(() {
                     isCollapsed = !isCollapsed;
@@ -128,10 +133,10 @@ class _MainLayoutState extends State<MainLayout> {
                 // isCollapsed: isCollapsed,
                 items: _items,
                 avatarImg: _avatarImg,
-                title: 'John Smith',
-                onTitleTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Yay! Flutter Collapsible Sidebar!')));
-                },
+                title: 'BINA BERSAMA',
+                // onTitleTap: () {
+                //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Yay! Flutter Collapsible Sidebar!')));
+                // },
                 body: const Text(''),
                 backgroundColor: Colors.white,
                 selectedTextColor: Colors.white,

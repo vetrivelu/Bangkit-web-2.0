@@ -1,3 +1,4 @@
+import 'package:bangkit/constants/themeconstants.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:bangkit/models/area.dart';
@@ -32,6 +33,9 @@ class _LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Location List',style: getText(context).headline6,),
+      ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Get.to(() => AreaView());
@@ -43,30 +47,44 @@ class _LocationListState extends State<LocationList> {
           if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
             List<QueryDocumentSnapshot<Map<String, dynamic>>> documents = snapshot.data!.docs;
             List<Area> areas = documents.map((e) => Area.fromJson(e.data())).toList();
-            return ListView.builder(
-                itemCount: areas.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(areas[index].property['Name'] ??
-                        (areas[index].coordinates.latitude.toString() + ',' + areas[index].coordinates.longitude.toString())),
-                    subtitle: Text(areas[index].location.toString()),
-                    leading: IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        Get.to(() => AreaView(
-                              area: areas[index],
-                            ));
-                      },
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        print("Hello");
-                        areas[index].delete();
-                      },
-                    ),
-                  );
-                });
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SizedBox(
+                height: getHeight(context)*0.85,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                        itemCount: areas.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(areas[index].property['Name'] ??
+                                (areas[index].coordinates.latitude.toString() + ',' + areas[index].coordinates.longitude.toString())),
+                            subtitle: Text(areas[index].location.toString()),
+                            leading: IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                Get.to(() => AreaView(
+                                      area: areas[index],
+                                    ));
+                              },
+                            ),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                print("Hello");
+                                areas[index].delete();
+                              },
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              ),
+            );
           }
           return const Center(child: CircularProgressIndicator());
         },

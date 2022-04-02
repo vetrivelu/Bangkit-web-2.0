@@ -134,23 +134,34 @@ class _AdunListState extends State<AdunList> {
                 }
                 // print(streamSnapshot.hasData);
                 return Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(8),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: streamSnapshot.data!.docs.map((snapshot) {
-                      var data = snapshot.data()! as Map<String, dynamic>;
-                      var adun = Adun.fromJson(data);
-                      if (selectedFederals.isNotEmpty) {
-                        var result = selectedFederals.contains(adun.federal);
-                        return result
-                            ? CustomExpansionTile(ngo: adun)
-                            : Container();
-                      } else {
-                        return CustomExpansionTile(ngo: adun);
-                      }
-                      // print("I am data $data");
-                    }).toList(),
+                  child: SizedBox(
+                    height: getHeight(context)*0.85,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListView(
+                          padding: const EdgeInsets.all(8),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: streamSnapshot.data!.docs.map((snapshot) {
+                            var data = snapshot.data()! as Map<String, dynamic>;
+                            var adun = Adun.fromJson(data);
+                            if (selectedFederals.isNotEmpty) {
+                              var result = selectedFederals.contains(adun.federal);
+                              return result
+                                  ? CustomExpansionTile(ngo: adun)
+                                  : Container();
+                            } else {
+                              return CustomExpansionTile(ngo: adun);
+                            }
+                            // print("I am data $data");
+                          }).toList(),
+                        ),
+                      ),
+                    ),
                   ),
                 );
               } else {
@@ -158,6 +169,9 @@ class _AdunListState extends State<AdunList> {
               }
             },
           ),
+          SizedBox(
+            height: getHeight(context)*0.08,
+          )
         ],
       ),
     );
